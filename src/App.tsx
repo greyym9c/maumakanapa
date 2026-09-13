@@ -43,10 +43,13 @@ export const App: React.FC = () => {
       (item) => item.isSample && (!item.address || !item.address.toLowerCase().includes('kudus'))
     );
 
-    if (loaded.length === 0 || hasOldNonKudusSample) {
+    // Auto-update to full 26 Kudus spots if empty, non-Kudus, or previous 8-item sample
+    const isOldSmallSampleSet = loaded.length < SAMPLE_FOOD_ITEMS.length && loaded.every((item) => item.isSample);
+
+    if (loaded.length === 0 || hasOldNonKudusSample || isOldSmallSampleSet) {
       setItems(SAMPLE_FOOD_ITEMS);
       saveFoodItems(SAMPLE_FOOD_ITEMS);
-      addToast('Menu rekomendasi kuliner Kudus bintang 4+ berhasil dimuat! ⭐');
+      addToast('26 kuliner Kudus bintang 4.5+ lengkap berhasil dimuat! ⭐');
     } else {
       setItems(loaded);
     }

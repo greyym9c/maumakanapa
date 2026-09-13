@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { FoodItem, MealTime } from '../types/food';
+import { FoodItem, MealTime, MEAL_TIME_LABELS } from '../types/food';
 import { FilterBar } from './FilterBar';
-import { CardDeck } from './CardDeck';
+import { CardStagePage } from './CardStagePage';
 import { ResultPanel } from './ResultPanel';
 import { EmptyState } from './EmptyState';
-import { PlusCircle, MapPin, Sparkles } from 'lucide-react';
+import { Dices, PlusCircle, MapPin, Sparkles, Heart } from 'lucide-react';
 import { SquiggleDoodle, StarDoodle } from './DoodleDecorations';
 
 interface RandomizerPageProps {
@@ -20,6 +20,8 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
   onOpenEditModal,
   onLoadSampleData,
 }) => {
+  // Navigation inside Randomizer: 'setup' -> 'card-stage' -> 'result'
+  const [viewMode, setViewMode] = useState<'setup' | 'card-stage' | 'result'>('setup');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFavoriteOf, setSelectedFavoriteOf] = useState<string>('all');
   const [selectedMealTime, setSelectedMealTime] = useState<MealTime>('semua');
@@ -36,7 +38,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       if (selectedFavoriteOf !== 'all' && item.favoriteOf !== selectedFavoriteOf) {
         return false;
       }
-      // Meal time filter (Waktu makan: Pagi, Siang, Sore, Malam)
+      // Meal time filter (Pagi, Siang, Sore, Malam)
       if (selectedMealTime !== 'semua') {
         if (item.bestTime && item.bestTime !== 'semua' && item.bestTime !== selectedMealTime) {
           return false;
@@ -55,24 +57,52 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     });
   }, [items, selectedCategory, selectedFavoriteOf, selectedMealTime, maxPrice]);
 
-  const handleResetRound = () => {
-    setSelectedResult(null);
+  // Handle reveal from card-stage
+  const handleItemRevealed = (item: FoodItem) => {
+    setSelectedResult(item);
+    setViewMode('result');
   };
 
-  // Dedicated Result Page (No long scroll down!)
-  if (selectedResult) {
+  // Reset to pick cards again
+  const handleResetToCards = () => {
+    setSelectedResult(null);
+    setViewMode('card-stage');
+  };
+
+  // Reset to filter setup
+  const handleResetToSetup = () => {
+    setSelectedResult(null);
+    setViewMode('setup');
+  };
+
+  // 1. DEDICATED FULL-SCREEN RESULT VIEW
+  if (viewMode === 'result' && selectedResult) {
     return (
       <div className="w-full min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-3">
         <ResultPanel
           selectedItem={selectedResult}
-          onResetRound={handleResetRound}
+          onResetRound={handleResetToCards}
           onEditItem={onOpenEditModal}
         />
       </div>
     );
   }
 
-  // If 0 items, show EmptyState
+  // 2. DEDICATED FULL-SCREEN CARD PICKING STAGE
+  if (viewMode === 'card-stage') {
+    return (
+      <CardStagePage
+        filteredItems={filteredItems}
+        onBackToSetup={() => setViewMode('setup')}
+        onItemRevealed={handleItemRevealed}
+        selectedMealTimeLabel={
+          selectedMealTime !== 'semua' ? MEAL_TIME_LABELS[selectedMealTime]?.label : undefined
+        }
+      />
+    );
+  }
+
+  // 3. EMPTY STATE
   if (items.length === 0) {
     return (
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
@@ -84,10 +114,11 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     );
   }
 
+  // 4. CLEAN SETUP & FILTER VIEW
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-      {/* Header section with Kudus vibe */}
-      <div className="text-center max-w-2xl mx-auto mb-5 relative">
+    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      {/* Header */}
+      <div className="text-center max-w-2xl mx-auto mb-4 relative">
         <div className="hidden sm:block absolute -top-2 left-4 pointer-events-none opacity-50">
           <StarDoodle className="w-5 h-5 text-[#3975EA]" />
         </div>
@@ -95,39 +126,27 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           <StarDoodle className="w-6 h-6 text-[#FFC5AD]" />
         </div>
 
-        {/* Kudus Badge */}
+        {/* Badge */}
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F0FF] text-[#3975EA] text-xs font-bold tracking-wide uppercase mb-2 shadow-xs border border-[#D0E0FF]">
           <MapPin className="w-3.5 h-3.5 text-[#E05A47]" />
           <span>Kuliner Kudus Rekomendasi ⭐ 4.5+</span>
         </div>
 
-        {/* Main Title */}
+        {/* Title */}
         <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#183153] tracking-tight leading-tight mb-1.5">
           Lagi di Kudus, mau makan apa hari ini?
         </h1>
 
-        {/* Description */}
         <p className="text-xs sm:text-sm text-[#183153]/80 font-medium leading-relaxed mb-3">
-          Soto Kudus, Lentog Tanjung, Sate Kerbau, atau Garang Asem? Pilih jam kencan, acak kartunya, terus gas berangkat bareng! 💕
+          Tentukan jam makan & selera kencan, lalu buka halaman acak kartu khusus! 💕
         </p>
 
-        {/* Action button */}
-        <div className="flex items-center justify-center gap-3">
-          <button
-            onClick={onOpenAddModal}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] bg-white hover:bg-[#E8F0FF] px-3.5 py-2 rounded-full border border-[#FFE8DD] shadow-xs transition-colors min-h-[38px]"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>Tambah Kuliner Kudus Baru</span>
-          </button>
-        </div>
-
-        <div className="flex justify-center mt-2 opacity-60">
+        <div className="flex justify-center mt-1 opacity-60">
           <SquiggleDoodle className="w-16 h-2 text-[#FFC5AD]" />
         </div>
       </div>
 
-      {/* Filter Bar with MealTime, Couple, Category & Budget */}
+      {/* Filter Bar with Kudus MealTime, Couple, Category & Budget */}
       <FilterBar
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
@@ -141,14 +160,35 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         totalCount={items.length}
       />
 
-      {/* Card Deck */}
-      <CardDeck
-        filteredItems={filteredItems}
-        onOpenAddModal={onOpenAddModal}
-        onItemRevealed={(item) => setSelectedResult(item)}
-        selectedItem={selectedResult}
-        onResetRound={handleResetRound}
-      />
+      {/* BIG PROMINENT ACTION BUTTON: Go to Fullscreen Card Stage */}
+      <div className="sticky bottom-20 md:bottom-6 z-30 pt-2 pb-1">
+        <button
+          onClick={() => setViewMode('card-stage')}
+          disabled={filteredItems.length === 0}
+          className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-3xl font-display font-extrabold text-base sm:text-lg shadow-soft-lg transition-all min-h-[56px] btn-press ${
+            filteredItems.length === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-[#3975EA] hover:bg-[#285ec4] text-white ring-4 ring-[#E8F0FF]'
+          }`}
+        >
+          <Dices className="w-6 h-6 animate-bounce" />
+          <span>Mulai Acak Kartu Kencan! 🎲</span>
+          <span className="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full font-sans font-bold">
+            {filteredItems.length} Tempat
+          </span>
+        </button>
+      </div>
+
+      {/* Quick Link to Add Custom Spot */}
+      <div className="text-center pt-3">
+        <button
+          onClick={onOpenAddModal}
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] p-2"
+        >
+          <PlusCircle className="w-4 h-4" />
+          <span>Tambah Tempat Makan Kudus Baru</span>
+        </button>
+      </div>
     </div>
   );
 };
