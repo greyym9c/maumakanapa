@@ -10,6 +10,8 @@ import { FoodModal } from './components/FoodModal';
 import { ConfirmModal } from './components/ConfirmModal';
 import { ToastContainer } from './components/Toast';
 
+import { InstallPwaBanner } from './components/InstallPwaBanner';
+
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'random' | 'collection'>('random');
   const [items, setItems] = useState<FoodItem[]>([]);
@@ -124,6 +126,11 @@ export const App: React.FC = () => {
         onTabChange={setActiveTab}
         totalItems={items.length}
       />
+
+      {/* PWA Install Banner */}
+      <div className="max-w-xl mx-auto pt-2 w-full">
+        <InstallPwaBanner />
+      </div>
 
       {/* Main Content Area */}
       <main className="flex-1">

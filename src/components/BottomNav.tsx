@@ -10,16 +10,21 @@ interface BottomNavProps {
 export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, totalItems }) => {
   return (
     <nav
-      aria-label="Navigasi Bawah Mobile"
-      className="md:hidden fixed bottom-3 left-4 right-4 z-40 bg-white/95 backdrop-blur-lg border border-[#FFE8DD] rounded-3xl shadow-soft-lg px-3 py-2"
+      aria-label="Navigasi Bawah Love Food"
+      className="md:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/95 backdrop-blur-xl border border-[#FFE8DD] rounded-3xl shadow-soft-lg px-2.5 py-2 safe-area-bottom"
     >
-      <div className="flex items-center justify-around">
+      <div className="flex items-center justify-around gap-2">
         <button
-          onClick={() => onTabChange('random')}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
+          onClick={() => {
+            if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+              try { navigator.vibrate(10); } catch {}
+            }
+            onTabChange('random');
+          }}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
             activeTab === 'random'
-              ? 'bg-[#3975EA] text-white shadow-sm'
-              : 'text-[#183153] hover:bg-[#E8F0FF]/50'
+              ? 'bg-[#3975EA] text-white shadow-sm scale-101'
+              : 'text-[#183153] hover:bg-[#E8F0FF]/60'
           }`}
         >
           <Dices className="w-5 h-5" />
@@ -27,11 +32,16 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
         </button>
 
         <button
-          onClick={() => onTabChange('collection')}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
+          onClick={() => {
+            if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+              try { navigator.vibrate(10); } catch {}
+            }
+            onTabChange('collection');
+          }}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
             activeTab === 'collection'
-              ? 'bg-[#3975EA] text-white shadow-sm'
-              : 'text-[#183153] hover:bg-[#E8F0FF]/50'
+              ? 'bg-[#3975EA] text-white shadow-sm scale-101'
+              : 'text-[#183153] hover:bg-[#E8F0FF]/60'
           }`}
         >
           <BookHeart className="w-5 h-5 text-[#E05A47]" />

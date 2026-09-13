@@ -1,0 +1,31 @@
+{
+  "name": "Love Food — Heru & Nadine",
+  "short_name": "Love Food",
+  "description": "Penentu menu dan tempat kencan kuliner spesial Heru & Nadine",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF9F4",
+  "theme_color": "#FFF9F4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["lifestyle", "food"]
+}
