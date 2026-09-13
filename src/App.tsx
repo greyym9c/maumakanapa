@@ -49,7 +49,7 @@ export const App: React.FC = () => {
     if (loaded.length === 0 || hasOldNonKudusSample || isOldSmallSampleSet) {
       setItems(SAMPLE_FOOD_ITEMS);
       saveFoodItems(SAMPLE_FOOD_ITEMS);
-      addToast('26 kuliner Kudus bintang 4.5+ lengkap berhasil dimuat! ⭐');
+      addToast('30 kuliner Kudus bintang 4.5+ termasuk Nasi Padang berhasil dimuat! ⭐');
     } else {
       setItems(loaded);
     }
@@ -74,7 +74,7 @@ export const App: React.FC = () => {
   // Load sample data
   const handleLoadSampleData = () => {
     updateItems(SAMPLE_FOOD_ITEMS);
-    addToast('8 menu rekomendasi kuliner Kudus bintang 4+ berhasil dimuat!');
+    addToast('30 menu rekomendasi kuliner Kudus bintang 4.5+ berhasil dimuat!');
   };
 
   // Open modal for adding
