@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { FoodItem } from '../types/food';
+import { FoodItem, MealTime } from '../types/food';
 import { FilterBar } from './FilterBar';
 import { CardDeck } from './CardDeck';
 import { ResultPanel } from './ResultPanel';
 import { EmptyState } from './EmptyState';
-import { PlusCircle, Heart } from 'lucide-react';
+import { PlusCircle, MapPin, Sparkles } from 'lucide-react';
 import { SquiggleDoodle, StarDoodle } from './DoodleDecorations';
 
 interface RandomizerPageProps {
@@ -22,6 +22,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFavoriteOf, setSelectedFavoriteOf] = useState<string>('all');
+  const [selectedMealTime, setSelectedMealTime] = useState<MealTime>('semua');
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [selectedResult, setSelectedResult] = useState<FoodItem | null>(null);
 
@@ -35,6 +36,12 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       if (selectedFavoriteOf !== 'all' && item.favoriteOf !== selectedFavoriteOf) {
         return false;
       }
+      // Meal time filter (Waktu makan: Pagi, Siang, Sore, Malam)
+      if (selectedMealTime !== 'semua') {
+        if (item.bestTime && item.bestTime !== 'semua' && item.bestTime !== selectedMealTime) {
+          return false;
+        }
+      }
       // Max price filter
       if (maxPrice !== null) {
         if (item.price === undefined || item.price === null) {
@@ -46,16 +53,16 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       }
       return true;
     });
-  }, [items, selectedCategory, selectedFavoriteOf, maxPrice]);
+  }, [items, selectedCategory, selectedFavoriteOf, selectedMealTime, maxPrice]);
 
   const handleResetRound = () => {
     setSelectedResult(null);
   };
 
-  // If item is chosen, show DEDICATED RESULT PAGE (not a bottom scroll!)
+  // Dedicated Result Page (No long scroll down!)
   if (selectedResult) {
     return (
-      <div className="w-full min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-4">
+      <div className="w-full min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-3">
         <ResultPanel
           selectedItem={selectedResult}
           onResetRound={handleResetRound}
@@ -65,7 +72,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     );
   }
 
-  // If 0 items overall, show EmptyState
+  // If 0 items, show EmptyState
   if (items.length === 0) {
     return (
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
@@ -77,11 +84,10 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     );
   }
 
-  // Otherwise, render the Deck View (No long scroll!)
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
-      {/* Header section */}
-      <div className="text-center max-w-2xl mx-auto mb-6 relative">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      {/* Header section with Kudus vibe */}
+      <div className="text-center max-w-2xl mx-auto mb-5 relative">
         <div className="hidden sm:block absolute -top-2 left-4 pointer-events-none opacity-50">
           <StarDoodle className="w-5 h-5 text-[#3975EA]" />
         </div>
@@ -89,52 +95,53 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           <StarDoodle className="w-6 h-6 text-[#FFC5AD]" />
         </div>
 
-        {/* Couple Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFE8DD] text-[#E05A47] text-xs font-bold tracking-wide uppercase mb-2.5 shadow-xs border border-[#FFC5AD]/80">
-          <Heart className="w-3.5 h-3.5 fill-current" />
-          <span>Spesial Untuk Heru & Nadine</span>
+        {/* Kudus Badge */}
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F0FF] text-[#3975EA] text-xs font-bold tracking-wide uppercase mb-2 shadow-xs border border-[#D0E0FF]">
+          <MapPin className="w-3.5 h-3.5 text-[#E05A47]" />
+          <span>Kuliner Kudus Rekomendasi ⭐ 4.5+</span>
         </div>
 
         {/* Main Title */}
-        <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#183153] tracking-tight leading-tight mb-2">
-          Hari ini kita makan apa, sayang?
+        <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#183153] tracking-tight leading-tight mb-1.5">
+          Lagi di Kudus, mau makan apa hari ini?
         </h1>
 
         {/* Description */}
-        <p className="text-xs sm:text-sm text-[#183153]/80 font-medium leading-relaxed mb-4">
-          Biar nggak ada drama saling bilang <span className="font-handwriting text-lg text-[#E05A47] font-bold">"terserah kamu"</span> lagi. Tinggal pilih kartu terus berangkat!
+        <p className="text-xs sm:text-sm text-[#183153]/80 font-medium leading-relaxed mb-3">
+          Soto Kudus, Lentog Tanjung, Sate Kerbau, atau Garang Asem? Pilih jam kencan, acak kartunya, terus gas berangkat bareng! 💕
         </p>
 
-        {/* Secondary shortcut button */}
+        {/* Action button */}
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={onOpenAddModal}
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] bg-white hover:bg-[#E8F0FF] px-3.5 py-2 rounded-full border border-[#FFE8DD] shadow-xs transition-colors min-h-[40px]"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] bg-white hover:bg-[#E8F0FF] px-3.5 py-2 rounded-full border border-[#FFE8DD] shadow-xs transition-colors min-h-[38px]"
           >
             <PlusCircle className="w-4 h-4" />
-            <span>Tambah tempat kencan</span>
+            <span>Tambah Kuliner Kudus Baru</span>
           </button>
         </div>
 
-        {/* Squiggle Accent */}
-        <div className="flex justify-center mt-2.5 opacity-60">
-          <SquiggleDoodle className="w-16 h-2.5 text-[#FFC5AD]" />
+        <div className="flex justify-center mt-2 opacity-60">
+          <SquiggleDoodle className="w-16 h-2 text-[#FFC5AD]" />
         </div>
       </div>
 
-      {/* Filter Bar with Couple Preferences */}
+      {/* Filter Bar with MealTime, Couple, Category & Budget */}
       <FilterBar
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
         selectedFavoriteOf={selectedFavoriteOf}
         onSelectFavoriteOf={setSelectedFavoriteOf}
+        selectedMealTime={selectedMealTime}
+        onSelectMealTime={setSelectedMealTime}
         maxPrice={maxPrice}
         onMaxPriceChange={setMaxPrice}
         filteredCount={filteredItems.length}
         totalCount={items.length}
       />
 
-      {/* Card Deck with Snappy Flip */}
+      {/* Card Deck */}
       <CardDeck
         filteredItems={filteredItems}
         onOpenAddModal={onOpenAddModal}

@@ -1,8 +1,8 @@
 import React from 'react';
-import { FoodItem, CATEGORY_LABELS, COUPLE_TAGS } from '../types/food';
-import { BowlIcon, SparkleDoodle } from './DoodleDecorations';
+import { FoodItem, CATEGORY_LABELS, COUPLE_TAGS, MEAL_TIME_LABELS } from '../types/food';
+import { BowlIcon } from './DoodleDecorations';
 import { formatRupiah } from '../utils/formatters';
-import { MapPin, Heart } from 'lucide-react';
+import { MapPin, Heart, Star, Clock } from 'lucide-react';
 
 interface FlippableCardProps {
   item: FoodItem;
@@ -25,10 +25,10 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
 }) => {
   const categoryInfo = CATEGORY_LABELS[item.category] || CATEGORY_LABELS['lainnya'];
   const coupleTag = item.favoriteOf ? COUPLE_TAGS[item.favoriteOf] : null;
+  const timeInfo = item.bestTime ? MEAL_TIME_LABELS[item.bestTime] : null;
 
   const handleClick = () => {
     if (isShuffling || isAnyFlipped) return;
-    // Haptic vibration on mobile phones
     if (typeof window !== 'undefined' && 'vibrate' in navigator) {
       try {
         navigator.vibrate(20);
@@ -46,7 +46,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
 
   return (
     <div
-      className="perspective-1000 w-full max-w-[280px] h-[295px] sm:h-[370px] select-none cursor-pointer transition-transform duration-300"
+      className="perspective-1000 w-full max-w-[280px] h-[305px] sm:h-[370px] select-none cursor-pointer transition-transform duration-300"
       style={{
         transform: !isFlipped && !isShuffling && rotationDeg ? `rotate(${rotationDeg}deg)` : 'none',
       }}
@@ -62,7 +62,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
           isFlipped ? 'rotate-y-180' : ''
         } ${isShuffling ? 'animate-pulse scale-95' : 'hover:-translate-y-2 hover:shadow-card-hover'}`}
       >
-        {/* ================= BACK OF CARD (Closed State: Blue with doodle & heart) ================= */}
+        {/* ================= BACK OF CARD (Closed State: Blue with doodle & Kudus touch) ================= */}
         <div
           className="absolute inset-0 w-full h-full backface-hidden rounded-3xl card-back-pattern border-3 sm:border-4 border-white shadow-soft-lg flex flex-col items-center justify-between p-3.5 sm:p-6 text-white overflow-hidden"
         >
@@ -70,7 +70,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
           <div className="w-full flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFC5AD] fill-current" />
-              <span className="font-handwriting text-sm sm:text-base text-[#FFE8DD]">Love Food</span>
+              <span className="font-handwriting text-sm sm:text-base text-[#FFE8DD]">Kudus Date</span>
             </div>
             <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-white/90 uppercase bg-white/20 px-2 py-0.5 rounded-full">
               #{index + 1}
@@ -87,55 +87,66 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
               Pilih aku?
             </h3>
             <p className="font-handwriting text-base sm:text-lg text-[#FFE8DD] font-semibold mt-0.5">
-              Menu spesial kita 💕
+              Spot enak di Kudus 💕
             </p>
           </div>
 
           {/* Bottom couple watermark */}
           <div className="w-full flex items-center justify-between text-[10px] sm:text-[11px] text-white/80 font-semibold border-t border-white/20 pt-1.5 sm:pt-2">
             <span>Heru</span>
-            <span className="text-[#FFC5AD]">❤️</span>
+            <span className="text-[#FFC5AD]">❤️ Kudus</span>
             <span>Nadine</span>
           </div>
         </div>
 
-        {/* ================= FRONT OF CARD (Revealed State: White with tags) ================= */}
+        {/* ================= FRONT OF CARD (Revealed State: Rating & Details) ================= */}
         <div
           className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl bg-white border-3 border-[#3975EA] shadow-xl flex flex-col justify-between p-3.5 sm:p-5 text-[#183153] overflow-hidden"
         >
-          {/* Header pill & Couple Badge */}
+          {/* Header pill & Rating & Best time */}
           <div className="flex items-center justify-between gap-1 flex-wrap">
-            <span className="text-[11px] sm:text-xs font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#E8F0FF] text-[#3975EA] flex items-center gap-1">
-              <span>{categoryInfo.emoji}</span>
-              <span>{categoryInfo.label}</span>
-            </span>
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] flex items-center gap-0.5">
+                <Star className="w-3 h-3 fill-current text-[#F59E0B]" />
+                <span>{item.rating ? item.rating.toFixed(1) : '4.6'}</span>
+              </span>
+
+              {timeInfo && item.bestTime !== 'semua' && (
+                <span className="text-[10px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#FFE8DD] text-[#E05A47]">
+                  {timeInfo.emoji} {timeInfo.label.split(' ')[0]}
+                </span>
+              )}
+            </div>
 
             {coupleTag && (
               <span className={`text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full border ${coupleTag.badgeColor}`}>
-                {coupleTag.emoji} {coupleTag.label}
+                {coupleTag.emoji}
               </span>
             )}
           </div>
 
           {/* Core Info */}
           <div className="my-auto py-1 sm:py-2">
-            <span className="font-handwriting text-sm sm:text-base font-bold text-[#E05A47] block">
-              Menu Terpilih ✨
-            </span>
-            <h4 className="font-display text-base sm:text-xl font-bold text-[#183153] leading-snug line-clamp-3 mb-1 sm:mb-2">
+            <h4 className="font-display text-base sm:text-xl font-bold text-[#183153] leading-snug line-clamp-3 mb-1 sm:mb-1.5">
               {item.menuName}
             </h4>
             <p className="text-xs sm:text-sm font-bold text-[#3975EA] flex items-center gap-1 line-clamp-1">
               <MapPin className="w-3.5 h-3.5 shrink-0" />
               <span>{item.placeName}</span>
             </p>
+            {item.openingHours && (
+              <p className="text-[11px] text-[#183153]/60 flex items-center gap-1 mt-1">
+                <Clock className="w-3 h-3 text-[#3975EA]" />
+                <span>{item.openingHours}</span>
+              </p>
+            )}
           </div>
 
           {/* Price & Checked */}
           <div className="pt-2 sm:pt-3 border-t border-[#FFE8DD] flex items-center justify-between">
             <div>
               <span className="text-[9px] sm:text-[10px] text-[#183153]/60 font-bold block uppercase">
-                Harga
+                Perkiraan Harga
               </span>
               <span className="text-xs sm:text-sm font-extrabold text-[#3975EA]">
                 {item.price ? formatRupiah(item.price) : 'Belum diisi'}

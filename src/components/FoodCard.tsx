@@ -1,7 +1,7 @@
 import React from 'react';
-import { FoodItem, CATEGORY_LABELS, COUPLE_TAGS } from '../types/food';
+import { FoodItem, CATEGORY_LABELS, COUPLE_TAGS, MEAL_TIME_LABELS } from '../types/food';
 import { formatRupiah } from '../utils/formatters';
-import { Edit2, Trash2, MapPin, ExternalLink, Sparkles } from 'lucide-react';
+import { Edit2, Trash2, MapPin, ExternalLink, Sparkles, Star, Clock } from 'lucide-react';
 
 interface FoodCardProps {
   item: FoodItem;
@@ -12,6 +12,7 @@ interface FoodCardProps {
 export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) => {
   const category = CATEGORY_LABELS[item.category] || CATEGORY_LABELS['lainnya'];
   const coupleTag = item.favoriteOf ? COUPLE_TAGS[item.favoriteOf] : null;
+  const timeInfo = item.bestTime ? MEAL_TIME_LABELS[item.bestTime] : null;
 
   return (
     <article
@@ -22,17 +23,26 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
       {item.isSample && (
         <div className="absolute top-0 right-0 bg-[#FFE8DD] text-[#183153] text-[10px] font-bold px-3 py-1 rounded-bl-xl border-l border-b border-[#FFC5AD] flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-[#3975EA]" />
-          <span>Contoh</span>
+          <span>Kudus Rekomen</span>
         </div>
       )}
 
       <div>
-        {/* Category & Couple Tag */}
+        {/* Rating, Category & Couple Tag */}
         <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#E8F0FF] text-[#3975EA]">
-            <span>{category.emoji}</span>
-            <span>{category.label}</span>
+          {/* Rating */}
+          <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-extrabold bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A]">
+            <Star className="w-3 h-3 fill-current text-[#F59E0B]" />
+            <span>{item.rating ? item.rating.toFixed(1) : '4.6'}</span>
           </span>
+
+          {/* Best Time Tag */}
+          {timeInfo && item.bestTime !== 'semua' && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FFE8DD] text-[#E05A47]">
+              <span>{timeInfo.emoji}</span>
+              <span>{timeInfo.label.split(' ')[0]}</span>
+            </span>
+          )}
 
           {coupleTag && (
             <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${coupleTag.badgeColor}`}>
@@ -53,14 +63,22 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
           {item.menuName}
         </h3>
 
-        <div className="flex items-center gap-1.5 text-sm font-bold text-[#3975EA] mb-2 break-words">
+        <div className="flex items-center gap-1.5 text-sm font-bold text-[#3975EA] mb-1.5 break-words">
           <MapPin className="w-4 h-4 shrink-0" />
           <span className="truncate">{item.placeName}</span>
         </div>
 
-        {/* Short address */}
+        {/* Opening Hours */}
+        {item.openingHours && (
+          <p className="text-xs text-[#183153]/70 flex items-center gap-1 mb-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#3975EA]" />
+            <span>Jam buka: {item.openingHours}</span>
+          </p>
+        )}
+
+        {/* Short address in Kudus */}
         {item.address && (
-          <p className="text-xs text-[#183153]/70 line-clamp-1 mb-1.5 break-words">
+          <p className="text-xs text-[#183153]/60 line-clamp-1 mb-1.5 break-words">
             📍 {item.address}
           </p>
         )}
@@ -86,10 +104,10 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
               className="inline-flex items-center gap-1 text-xs font-bold text-[#3975EA] hover:underline p-1 min-h-[36px]"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Maps</span>
+              <span>Google Maps</span>
             </a>
           ) : (
-            <span className="text-[11px] text-[#183153]/40">Tanpa Maps</span>
+            <span className="text-[11px] text-[#183153]/40">Kudus</span>
           )}
         </div>
 

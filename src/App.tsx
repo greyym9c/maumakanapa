@@ -37,7 +37,19 @@ export const App: React.FC = () => {
   // Initial load from localStorage
   useEffect(() => {
     const { items: loaded, isCorrupted } = loadFoodItems();
-    setItems(loaded);
+    
+    // Auto-update to Kudus recommended spots if empty or previous non-Kudus sample
+    const hasOldNonKudusSample = loaded.some(
+      (item) => item.isSample && (!item.address || !item.address.toLowerCase().includes('kudus'))
+    );
+
+    if (loaded.length === 0 || hasOldNonKudusSample) {
+      setItems(SAMPLE_FOOD_ITEMS);
+      saveFoodItems(SAMPLE_FOOD_ITEMS);
+      addToast('Menu rekomendasi kuliner Kudus bintang 4+ berhasil dimuat! ⭐');
+    } else {
+      setItems(loaded);
+    }
 
     if (isCorrupted) {
       addToast(
@@ -59,7 +71,7 @@ export const App: React.FC = () => {
   // Load sample data
   const handleLoadSampleData = () => {
     updateItems(SAMPLE_FOOD_ITEMS);
-    addToast('7 data kuliner contoh berhasil dimuat! Kamu bisa mengedit atau menghapusnya.');
+    addToast('8 menu rekomendasi kuliner Kudus bintang 4+ berhasil dimuat!');
   };
 
   // Open modal for adding
