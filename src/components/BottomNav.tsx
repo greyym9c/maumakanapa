@@ -11,7 +11,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
   return (
     <nav
       aria-label="Navigasi Bawah Love Food"
-      className="md:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/95 backdrop-blur-xl border border-[#FFE8DD] rounded-3xl shadow-soft-lg px-2.5 py-2 safe-area-bottom"
+      className="md:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/95 backdrop-blur-2xl border border-[#FFE8DD] rounded-3xl shadow-[0_12px_36px_rgba(20,37,61,0.12)] p-2 safe-area-bottom"
     >
       <div className="flex items-center justify-around gap-2">
         <button
@@ -21,10 +21,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
             }
             onTabChange('random');
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-extrabold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
             activeTab === 'random'
-              ? 'bg-[#3975EA] text-white shadow-sm scale-101'
-              : 'text-[#183153] hover:bg-[#E8F0FF]/60'
+              ? 'bg-gradient-to-r from-[#3975EA] to-[#2558be] text-white shadow-[0_6px_16px_rgba(57,117,234,0.35)] scale-102'
+              : 'text-[#14253D] hover:bg-[#E8F0FF]/50 active:scale-98'
           }`}
         >
           <Dices className="w-5 h-5" />
@@ -38,20 +38,20 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
             }
             onTabChange('collection');
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-display font-extrabold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
             activeTab === 'collection'
-              ? 'bg-[#3975EA] text-white shadow-sm scale-101'
-              : 'text-[#183153] hover:bg-[#E8F0FF]/60'
+              ? 'bg-gradient-to-r from-[#3975EA] to-[#2558be] text-white shadow-[0_6px_16px_rgba(57,117,234,0.35)] scale-102'
+              : 'text-[#14253D] hover:bg-[#E8F0FF]/50 active:scale-98'
           }`}
         >
           <BookHeart className="w-5 h-5 text-[#E05A47]" />
-          <span>Kuliner Kita</span>
+          <span>Kuliner Kudus</span>
           {totalItems > 0 && (
             <span
               className={`text-xs px-2 py-0.5 rounded-full font-bold transition-colors ${
                 activeTab === 'collection'
-                  ? 'bg-[#FFE8DD] text-[#183153]'
-                  : 'bg-[#3975EA] text-white'
+                  ? 'bg-white text-[#3975EA]'
+                  : 'bg-[#FFE8DD] text-[#14253D]'
               }`}
             >
               {totalItems}

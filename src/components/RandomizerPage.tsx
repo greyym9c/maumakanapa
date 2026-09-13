@@ -20,7 +20,6 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
   onOpenEditModal,
   onLoadSampleData,
 }) => {
-  // Navigation inside Randomizer: 'setup' -> 'card-stage' -> 'result'
   const [viewMode, setViewMode] = useState<'setup' | 'card-stage' | 'result'>('setup');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFavoriteOf, setSelectedFavoriteOf] = useState<string>('all');
@@ -57,22 +56,14 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     });
   }, [items, selectedCategory, selectedFavoriteOf, selectedMealTime, maxPrice]);
 
-  // Handle reveal from card-stage
   const handleItemRevealed = (item: FoodItem) => {
     setSelectedResult(item);
     setViewMode('result');
   };
 
-  // Reset to pick cards again
   const handleResetToCards = () => {
     setSelectedResult(null);
     setViewMode('card-stage');
-  };
-
-  // Reset to filter setup
-  const handleResetToSetup = () => {
-    setSelectedResult(null);
-    setViewMode('setup');
   };
 
   // 1. DEDICATED FULL-SCREEN RESULT VIEW
@@ -127,17 +118,17 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         </div>
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F0FF] text-[#3975EA] text-xs font-bold tracking-wide uppercase mb-2 shadow-xs border border-[#D0E0FF]">
-          <MapPin className="w-3.5 h-3.5 text-[#E05A47]" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#E8F0FF] to-[#D5E5FF] text-[#2558be] text-xs font-extrabold tracking-wide uppercase mb-2 shadow-xs border border-[#BDD7FF]">
+          <MapPin className="w-3.5 h-3.5 text-[#D44835]" />
           <span>Kuliner Kudus Rekomendasi ⭐ 4.5+</span>
         </div>
 
         {/* Title */}
-        <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#183153] tracking-tight leading-tight mb-1.5">
+        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-1.5">
           Lagi di Kudus, mau makan apa hari ini?
         </h1>
 
-        <p className="text-xs sm:text-sm text-[#183153]/80 font-medium leading-relaxed mb-3">
+        <p className="text-xs sm:text-sm text-[#14253D]/80 font-medium leading-relaxed mb-3">
           Tentukan jam makan & selera kencan, lalu buka halaman acak kartu khusus! 💕
         </p>
 
@@ -160,20 +151,20 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         totalCount={items.length}
       />
 
-      {/* BIG PROMINENT ACTION BUTTON: Go to Fullscreen Card Stage */}
-      <div className="sticky bottom-20 md:bottom-6 z-30 pt-2 pb-1">
+      {/* GLOWING HERO CTA BUTTON */}
+      <div className="sticky bottom-20 md:bottom-6 z-30 pt-1 pb-1">
         <button
           onClick={() => setViewMode('card-stage')}
           disabled={filteredItems.length === 0}
-          className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-3xl font-display font-extrabold text-base sm:text-lg shadow-soft-lg transition-all min-h-[56px] btn-press ${
+          className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-3xl font-display font-black text-base sm:text-lg transition-all min-h-[58px] btn-press ${
             filteredItems.length === 0
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-[#3975EA] hover:bg-[#285ec4] text-white ring-4 ring-[#E8F0FF]'
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none'
+              : 'bg-gradient-to-r from-[#3975EA] via-[#2a68e8] to-[#1d52ca] hover:brightness-105 text-white shadow-[0_12px_32px_rgba(57,117,234,0.4)] ring-4 ring-[#E8F0FF]'
           }`}
         >
           <Dices className="w-6 h-6 animate-bounce" />
           <span>Mulai Acak Kartu Kencan! 🎲</span>
-          <span className="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full font-sans font-bold">
+          <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-sans font-extrabold shadow-inner">
             {filteredItems.length} Tempat
           </span>
         </button>
@@ -183,7 +174,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       <div className="text-center pt-3">
         <button
           onClick={onOpenAddModal}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] p-2"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] p-2 hover:underline"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Tambah Tempat Makan Kudus Baru</span>
