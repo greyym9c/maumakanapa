@@ -55,13 +55,16 @@ export const CardDeck: React.FC<CardDeckProps> = ({
       setCurrentDeck(newlyShuffled);
       setIsShuffling(false);
       setHasShuffledOnce(true);
-    }, 650);
+    }, 400);
   };
 
   const handleSelectCard = (item: FoodItem) => {
     if (flippedCardId || isShuffling) return;
     setFlippedCardId(item.id);
-    onItemRevealed(item);
+    // Instant snappy transition to dedicated result page right after flip
+    setTimeout(() => {
+      onItemRevealed(item);
+    }, 280);
   };
 
   if (filteredItems.length === 0) {

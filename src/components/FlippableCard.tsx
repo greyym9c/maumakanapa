@@ -58,7 +58,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
         aria-pressed={isFlipped}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        className={`w-full h-full relative transform-style-3d transition-transform duration-700 ease-out rounded-3xl outline-none focus-visible:ring-4 focus-visible:ring-[#3975EA] focus-visible:ring-offset-2 ${
+        className={`w-full h-full relative transform-style-3d transition-transform duration-250 ease-out rounded-3xl outline-none focus-visible:ring-4 focus-visible:ring-[#3975EA] focus-visible:ring-offset-2 ${
           isFlipped ? 'rotate-y-180' : ''
         } ${isShuffling ? 'animate-pulse scale-95' : 'hover:-translate-y-2 hover:shadow-card-hover'}`}
       >
