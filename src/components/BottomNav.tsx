@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dices, UtensilsCrossed } from 'lucide-react';
+import { Dices, BookHeart } from 'lucide-react';
 
 interface BottomNavProps {
   activeTab: 'random' | 'collection';
@@ -16,7 +16,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
       <div className="flex items-center justify-around">
         <button
           onClick={() => onTabChange('random')}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-semibold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] ${
             activeTab === 'random'
               ? 'bg-[#3975EA] text-white shadow-sm'
               : 'text-[#183153] hover:bg-[#E8F0FF]/50'
@@ -28,14 +28,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
 
         <button
           onClick={() => onTabChange('collection')}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-semibold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-2xl min-h-[48px] font-bold text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] relative ${
             activeTab === 'collection'
               ? 'bg-[#3975EA] text-white shadow-sm'
               : 'text-[#183153] hover:bg-[#E8F0FF]/50'
           }`}
         >
-          <UtensilsCrossed className="w-5 h-5" />
-          <span>Koleksi</span>
+          <BookHeart className="w-5 h-5 text-[#E05A47]" />
+          <span>Kuliner Kita</span>
           {totalItems > 0 && (
             <span
               className={`text-xs px-2 py-0.5 rounded-full font-bold transition-colors ${

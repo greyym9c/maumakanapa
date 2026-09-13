@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FoodItem, FoodCategory, CATEGORY_LABELS } from '../types/food';
+import { FoodItem, FoodCategory, CoupleFavorite, CATEGORY_LABELS, COUPLE_TAGS } from '../types/food';
 import { isValidHttpUrl } from '../utils/formatters';
-import { X, Save, AlertCircle } from 'lucide-react';
+import { X, Save, AlertCircle, Heart } from 'lucide-react';
 import { BowlIcon } from './DoodleDecorations';
 
 interface FoodModalProps {
@@ -20,6 +20,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
   const [placeName, setPlaceName] = useState('');
   const [menuName, setMenuName] = useState('');
   const [category, setCategory] = useState<FoodCategory>('nasi');
+  const [favoriteOf, setFavoriteOf] = useState<CoupleFavorite>('berdua');
   const [price, setPrice] = useState<string>('');
   const [address, setAddress] = useState('');
   const [mapsUrl, setMapsUrl] = useState('');
@@ -34,13 +35,13 @@ export const FoodModal: React.FC<FoodModalProps> = ({
 
   const firstInputRef = useRef<HTMLInputElement>(null);
 
-  // Sync state with initialItem whenever opened
   useEffect(() => {
     if (isOpen) {
       if (initialItem) {
         setPlaceName(initialItem.placeName);
         setMenuName(initialItem.menuName);
         setCategory((initialItem.category as FoodCategory) || 'nasi');
+        setFavoriteOf(initialItem.favoriteOf || 'berdua');
         setPrice(initialItem.price !== undefined ? String(initialItem.price) : '');
         setAddress(initialItem.address || '');
         setMapsUrl(initialItem.mapsUrl || '');
@@ -49,20 +50,19 @@ export const FoodModal: React.FC<FoodModalProps> = ({
         setPlaceName('');
         setMenuName('');
         setCategory('nasi');
+        setFavoriteOf('berdua');
         setPrice('');
         setAddress('');
         setMapsUrl('');
         setNotes('');
       }
       setErrors({});
-      // Focus on first input
       setTimeout(() => {
         firstInputRef.current?.focus();
       }, 100);
     }
   }, [isOpen, initialItem]);
 
-  // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -79,11 +79,11 @@ export const FoodModal: React.FC<FoodModalProps> = ({
     const newErrors: typeof errors = {};
 
     if (!placeName.trim()) {
-      newErrors.placeName = 'Nama tempat makan wajib diisi!';
+      newErrors.placeName = 'Nama tempat makan wajib diisi ya!';
     }
 
     if (!menuName.trim()) {
-      newErrors.menuName = 'Nama menu makanan wajib diisi!';
+      newErrors.menuName = 'Nama menu makanan wajib diisi ya!';
     }
 
     if (price.trim() !== '') {
@@ -112,6 +112,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
         placeName: placeName.trim(),
         menuName: menuName.trim(),
         category,
+        favoriteOf,
         price: price.trim() !== '' ? Math.round(Number(price)) : undefined,
         address: address.trim() || undefined,
         mapsUrl: mapsUrl.trim() || undefined,
@@ -129,23 +130,21 @@ export const FoodModal: React.FC<FoodModalProps> = ({
       aria-labelledby="modal-title"
       className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/40 backdrop-blur-xs p-0 md:p-4"
     >
-      {/* Click outside backdrop */}
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
-      {/* Modal / Bottom-Sheet Container */}
       <div className="relative w-full md:max-w-xl bg-white rounded-t-3xl md:rounded-3xl shadow-2xl border border-[#FFE8DD] flex flex-col max-h-[92vh] z-10 animate-in slide-in-from-bottom md:zoom-in-95 duration-200">
-        {/* Modal Header */}
+        {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-[#FFE8DD] bg-[#FFF9F4] rounded-t-3xl">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-[#3975EA] text-white flex items-center justify-center">
               <BowlIcon className="w-5 h-5 text-[#FFE8DD]" />
             </div>
             <div>
-              <h2 id="modal-title" className="font-fredoka text-xl font-bold text-[#183153]">
-                {initialItem ? 'Edit Kuliner' : 'Tambah Kuliner Baru'}
+              <h2 id="modal-title" className="font-display text-xl font-bold text-[#183153]">
+                {initialItem ? 'Edit Kuliner Kencan' : 'Tambah Tempat Makan Baru'}
               </h2>
-              <p className="text-xs text-[#183153]/70">
-                Lengkapi nama tempat dan menu favoritmu.
+              <p className="text-xs text-[#183153]/70 font-medium">
+                Buat daftar kuliner Heru & Nadine makin lengkap 💕
               </p>
             </div>
           </div>
@@ -159,22 +158,51 @@ export const FoodModal: React.FC<FoodModalProps> = ({
           </button>
         </div>
 
-        {/* Form Body - Scrollable */}
+        {/* Form Body */}
         <form onSubmit={handleSubmit} className="overflow-y-auto p-5 space-y-4">
+          {/* Favorit Siapa? */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5 flex items-center gap-1">
+              <Heart className="w-3.5 h-3.5 text-[#E05A47] fill-current" />
+              Ini Makanan Favorit Siapa?
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              {(['heru', 'nadine', 'berdua'] as CoupleFavorite[]).map((fav) => {
+                const info = COUPLE_TAGS[fav];
+                const isSelected = favoriteOf === fav;
+                return (
+                  <button
+                    type="button"
+                    key={fav}
+                    onClick={() => setFavoriteOf(fav)}
+                    className={`flex items-center justify-center gap-1.5 p-2.5 rounded-2xl text-xs font-bold transition-all min-h-[44px] border ${
+                      isSelected
+                        ? 'bg-[#183153] text-white border-[#183153] shadow-xs'
+                        : 'bg-[#FFF9F4] text-[#183153] border-[#FFE8DD] hover:bg-[#FFE8DD]'
+                    }`}
+                  >
+                    <span>{info.emoji}</span>
+                    <span>{info.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Tempat Makan (Wajib) */}
           <div>
             <label
               htmlFor="placeName"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5"
             >
-              Nama Tempat Makan <span className="text-red-500">*</span>
+              Nama Tempat Makan / Resto <span className="text-red-500">*</span>
             </label>
             <input
               ref={firstInputRef}
               id="placeName"
               type="text"
               required
-              placeholder="Contoh: Mie Gacoan, Warteg Bahari, RM Padang..."
+              placeholder="Contoh: Sushi Tei, Mie Gacoan, RM Padang Sederhana..."
               value={placeName}
               onChange={(e) => {
                 setPlaceName(e.target.value);
@@ -198,13 +226,13 @@ export const FoodModal: React.FC<FoodModalProps> = ({
               htmlFor="menuName"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5"
             >
-              Nama Menu Makanan <span className="text-red-500">*</span>
+              Nama Menu Spesial <span className="text-red-500">*</span>
             </label>
             <input
               id="menuName"
               type="text"
               required
-              placeholder="Contoh: Mie Hompimpa Lv 2, Nasi Rendang, Es Cendol..."
+              placeholder="Contoh: Salmon Mentai, Nasi Rendang, Mie Hompimpa Lv 2..."
               value={menuName}
               onChange={(e) => {
                 setMenuName(e.target.value);
@@ -225,7 +253,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
           {/* Kategori */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5">
-              Kategori Kuliner
+              Kategori Menu
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {(['nasi', 'mi', 'bakso', 'camilan', 'minuman', 'lainnya'] as FoodCategory[]).map(
@@ -269,7 +297,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
                 type="number"
                 min="0"
                 step="1000"
-                placeholder="25000"
+                placeholder="35000"
                 value={price}
                 onChange={(e) => {
                   setPrice(e.target.value);
@@ -294,12 +322,12 @@ export const FoodModal: React.FC<FoodModalProps> = ({
               htmlFor="address"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5"
             >
-              Alamat Singkat / Lokasi <span className="text-[#183153]/50 font-normal">(Opsional)</span>
+              Alamat / Patokan Lokasi <span className="text-[#183153]/50 font-normal">(Opsional)</span>
             </label>
             <input
               id="address"
               type="text"
-              placeholder="Contoh: Seberang mall, Dekat kampus B, Jl. Sudirman No. 5"
+              placeholder="Contoh: Dekat kos Heru, Mall Lt. 2, Seberang stasiun..."
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="w-full px-4 py-3 rounded-2xl bg-[#FFF9F4] border border-[#FFE8DD] text-sm text-[#183153] placeholder:text-[#183153]/40 focus:outline-none focus:ring-2 focus:ring-[#3975EA] min-h-[48px]"
@@ -341,12 +369,12 @@ export const FoodModal: React.FC<FoodModalProps> = ({
               htmlFor="notes"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1.5"
             >
-              Catatan Pribadi <span className="text-[#183153]/50 font-normal">(Opsional)</span>
+              Catatan Kencan Kita <span className="text-[#183153]/50 font-normal">(Opsional)</span>
             </label>
             <textarea
               id="notes"
               rows={2}
-              placeholder="Contoh: Enak dimakan waktu hujan, jangan lupa minta kuah pisah..."
+              placeholder="Contoh: Nadine suka yang keju, jangan lupa pesen es teh tawar..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className="w-full px-4 py-3 rounded-2xl bg-[#FFF9F4] border border-[#FFE8DD] text-sm text-[#183153] placeholder:text-[#183153]/40 focus:outline-none focus:ring-2 focus:ring-[#3975EA]"
@@ -364,10 +392,10 @@ export const FoodModal: React.FC<FoodModalProps> = ({
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-[#3975EA] hover:bg-[#2c65cf] text-white font-bold px-6 py-3 rounded-2xl shadow-soft btn-press min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#183153]"
+              className="inline-flex items-center gap-2 bg-[#3975EA] hover:bg-[#285ec4] text-white font-bold px-6 py-3 rounded-2xl shadow-soft btn-press min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#183153]"
             >
               <Save className="w-4 h-4" />
-              <span>{initialItem ? 'Simpan Perubahan' : 'Tambah Kuliner'}</span>
+              <span>{initialItem ? 'Simpan Perubahan' : 'Simpan ke Daftar'}</span>
             </button>
           </div>
         </form>

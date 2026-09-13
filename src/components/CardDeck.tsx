@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FoodItem } from '../types/food';
 import { FlippableCard } from './FlippableCard';
 import { sampleRandomItems } from '../utils/shuffle';
-import { Sparkles, Dices, PlusCircle, AlertCircle } from 'lucide-react';
+import { Dices, PlusCircle, AlertCircle, Heart } from 'lucide-react';
 
 interface CardDeckProps {
   filteredItems: FoodItem[];
@@ -24,7 +24,6 @@ export const CardDeck: React.FC<CardDeckProps> = ({
   const [hasShuffledOnce, setHasShuffledOnce] = useState<boolean>(false);
   const [flippedCardId, setFlippedCardId] = useState<string | null>(null);
 
-  // When filteredItems change or when initializing, prepare the initial 6 sampled items
   useEffect(() => {
     if (filteredItems.length > 0) {
       const sampled = sampleRandomItems(filteredItems, 6);
@@ -37,7 +36,6 @@ export const CardDeck: React.FC<CardDeckProps> = ({
     }
   }, [filteredItems]);
 
-  // Sync selectedItem if externally reset
   useEffect(() => {
     if (!selectedItem) {
       setFlippedCardId(null);
@@ -52,7 +50,6 @@ export const CardDeck: React.FC<CardDeckProps> = ({
     setFlippedCardId(null);
     onResetRound();
 
-    // Sound / tactile simulation & shuffle animation duration
     setTimeout(() => {
       const newlyShuffled = sampleRandomItems(filteredItems, 6);
       setCurrentDeck(newlyShuffled);
@@ -62,36 +59,34 @@ export const CardDeck: React.FC<CardDeckProps> = ({
   };
 
   const handleSelectCard = (item: FoodItem) => {
-    if (flippedCardId || isShuffling) return; // Prevent multiple flips
+    if (flippedCardId || isShuffling) return;
     setFlippedCardId(item.id);
     onItemRevealed(item);
   };
 
-  // Case 0 items matching
   if (filteredItems.length === 0) {
     return (
       <div className="bg-white rounded-3xl p-8 text-center border-2 border-dashed border-[#FFC5AD] shadow-soft my-6 max-w-lg mx-auto">
-        <div className="w-16 h-16 rounded-full bg-[#FFE8DD] text-[#3975EA] flex items-center justify-center mx-auto mb-3">
-          <AlertCircle className="w-8 h-8 text-[#3975EA]" />
+        <div className="w-16 h-16 rounded-full bg-[#FFE8DD] text-[#E05A47] flex items-center justify-center mx-auto mb-3">
+          <AlertCircle className="w-8 h-8" />
         </div>
-        <h3 className="font-fredoka text-xl font-bold text-[#183153] mb-1">
-          Tidak ada kuliner yang cocok
+        <h3 className="font-display text-xl font-bold text-[#183153] mb-1">
+          Belum ada kuliner yang pas nih
         </h3>
-        <p className="text-sm text-[#183153]/70 mb-5">
-          Coba sesuaikan filter kategori atau batas harga di atas, atau tambahkan menu baru sekarang.
+        <p className="text-sm text-[#183153]/70 mb-5 font-medium">
+          Coba ganti filter kesukaan Heru/Nadine atau tambahkan tempat makan baru ke daftar kalian.
         </p>
         <button
           onClick={onOpenAddModal}
           className="inline-flex items-center gap-2 bg-[#3975EA] text-white px-5 py-2.5 rounded-2xl font-bold text-sm shadow-soft btn-press min-h-[44px]"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>Tambah Kuliner Baru</span>
+          <span>Tambah Tempat Makan Baru</span>
         </button>
       </div>
     );
   }
 
-  // Calculate fan rotation degree for desktop
   const getFanRotation = (index: number, total: number) => {
     if (total <= 1) return 0;
     const center = (total - 1) / 2;
@@ -100,49 +95,49 @@ export const CardDeck: React.FC<CardDeckProps> = ({
   };
 
   return (
-    <section aria-label="Dek Kartu Acak" className="w-full">
+    <section aria-label="Dek Kartu Acak Kencan" className="w-full">
       {/* Top Action & Instructions */}
       <div className="text-center mb-6">
         <div className="inline-flex items-center gap-2 mb-3">
           <button
             onClick={handleShuffle}
             disabled={isShuffling}
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-base shadow-soft transition-all min-h-[48px] btn-press ${
+            className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-display font-bold text-base shadow-soft transition-all min-h-[50px] btn-press ${
               isShuffling
                 ? 'bg-[#E8F0FF] text-[#3975EA] cursor-wait'
-                : 'bg-[#3975EA] hover:bg-[#2c65cf] text-white'
+                : 'bg-[#3975EA] hover:bg-[#285ec4] text-white'
             }`}
           >
             <Dices className={`w-5 h-5 ${isShuffling ? 'animate-spin' : ''}`} />
-            <span>{isShuffling ? 'Mengacak kartu...' : 'Acak dulu!'}</span>
+            <span>{isShuffling ? 'Lagi diacak acak...' : 'Acak Menu Kencan! 🎲'}</span>
           </button>
         </div>
 
         {/* Prompt message */}
-        <div className="min-h-[28px] flex items-center justify-center">
+        <div className="min-h-[32px] flex items-center justify-center">
           {isShuffling ? (
-            <p className="text-sm font-semibold text-[#3975EA] animate-pulse">
-              Kartu sedang diputar acak dengan Fisher–Yates...
+            <p className="font-handwriting text-xl font-bold text-[#3975EA] animate-pulse">
+              Bentar ya, lagi dikocok biar adil tanpa berantem...
             </p>
           ) : flippedCardId ? (
-            <p className="text-sm font-bold text-[#183153] flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#FFC5AD]" />
-              Kartu sudah terbuka! Lihat rekomendasinya di bawah.
+            <p className="font-handwriting text-xl font-bold text-[#E05A47] flex items-center justify-center gap-1.5">
+              <Heart className="w-4 h-4 fill-current" />
+              Yess! Kartu udah kebuka. Hari ini kita makan ini ya!
             </p>
           ) : hasShuffledOnce || currentDeck.length > 0 ? (
-            <p className="text-sm font-semibold text-[#183153] bg-[#FFE8DD]/60 px-4 py-1.5 rounded-full inline-block border border-[#FFC5AD]/60">
+            <p className="font-handwriting text-xl font-bold text-[#183153] bg-[#FFE8DD] px-5 py-1.5 rounded-full inline-block border border-[#FFC5AD]/80 shadow-xs">
               {currentDeck.length === 1
-                ? '⭐ Pilihan satu-satunya yang tak tergantikan! Buka kartunya sekarang.'
-                : 'Pilih satu kartu. Jangan overthinking.'}
+                ? '⭐ Menu andalan satu-satunya! Langsung ketuk kartunya ya.'
+                : 'Pilih satu kartu! Dilarang jawab "terserah" lagi ya ❤️'}
             </p>
           ) : null}
         </div>
       </div>
 
-      {/* Cards Area: Responsive Desktop Fan vs Mobile 2-col Grid */}
+      {/* Cards Area: Desktop Fan vs Mobile 2-col Grid */}
       <div className="w-full">
-        {/* Desktop Fan / Grid Container */}
-        <div className="hidden md:flex flex-wrap items-center justify-center gap-5 sm:gap-6 py-6 px-2 min-h-[400px]">
+        {/* Desktop Fan */}
+        <div className="hidden md:flex flex-wrap items-center justify-center gap-5 sm:gap-6 py-6 px-2 min-h-[410px]">
           {currentDeck.map((item, idx) => (
             <FlippableCard
               key={item.id}
@@ -157,7 +152,7 @@ export const CardDeck: React.FC<CardDeckProps> = ({
           ))}
         </div>
 
-        {/* Mobile 2-column Grid (clean tap area, no horizontal overflow) */}
+        {/* Mobile 2-col Grid */}
         <div className="grid md:hidden grid-cols-2 gap-3 sm:gap-4 py-2">
           {currentDeck.map((item, idx) => (
             <div key={item.id} className="flex justify-center w-full">

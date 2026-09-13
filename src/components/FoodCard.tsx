@@ -1,5 +1,5 @@
 import React from 'react';
-import { FoodItem, CATEGORY_LABELS } from '../types/food';
+import { FoodItem, CATEGORY_LABELS, COUPLE_TAGS } from '../types/food';
 import { formatRupiah } from '../utils/formatters';
 import { Edit2, Trash2, MapPin, ExternalLink, Sparkles } from 'lucide-react';
 
@@ -11,6 +11,7 @@ interface FoodCardProps {
 
 export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) => {
   const category = CATEGORY_LABELS[item.category] || CATEGORY_LABELS['lainnya'];
+  const coupleTag = item.favoriteOf ? COUPLE_TAGS[item.favoriteOf] : null;
 
   return (
     <article
@@ -26,12 +27,19 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
       )}
 
       <div>
-        {/* Category Pill */}
-        <div className="flex items-center gap-2 mb-2">
+        {/* Category & Couple Tag */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#E8F0FF] text-[#3975EA]">
             <span>{category.emoji}</span>
             <span>{category.label}</span>
           </span>
+
+          {coupleTag && (
+            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${coupleTag.badgeColor}`}>
+              <span>{coupleTag.emoji}</span>
+              <span>{coupleTag.label}</span>
+            </span>
+          )}
 
           {item.price !== undefined && item.price !== null && (
             <span className="text-xs font-bold text-[#183153]/80 bg-[#FFF9F4] px-2.5 py-0.5 rounded-full border border-[#FFE8DD]">
@@ -41,26 +49,29 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
         </div>
 
         {/* Menu & Place */}
-        <h3 className="font-fredoka text-lg font-bold text-[#183153] leading-snug break-words mb-1">
+        <h3 className="font-display text-lg font-bold text-[#183153] leading-snug break-words mb-1">
           {item.menuName}
         </h3>
 
-        <div className="flex items-center gap-1.5 text-sm font-semibold text-[#3975EA] mb-2 break-words">
+        <div className="flex items-center gap-1.5 text-sm font-bold text-[#3975EA] mb-2 break-words">
           <MapPin className="w-4 h-4 shrink-0" />
           <span className="truncate">{item.placeName}</span>
         </div>
 
-        {/* Short address or notes */}
+        {/* Short address */}
         {item.address && (
-          <p className="text-xs text-[#183153]/70 line-clamp-1 mb-1 break-words">
+          <p className="text-xs text-[#183153]/70 line-clamp-1 mb-1.5 break-words">
             📍 {item.address}
           </p>
         )}
 
+        {/* Couple Note */}
         {item.notes && (
-          <p className="text-xs text-[#183153]/60 italic line-clamp-2 mt-1 bg-[#FFF9F4] p-2 rounded-xl border border-[#FFE8DD]/60">
-            "{item.notes}"
-          </p>
+          <div className="mt-1 bg-[#FFF9F4] p-2.5 rounded-2xl border border-[#FFE8DD]">
+            <p className="font-handwriting text-sm text-[#E05A47] font-semibold leading-snug">
+              "{item.notes}"
+            </p>
+          </div>
         )}
       </div>
 

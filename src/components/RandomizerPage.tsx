@@ -4,7 +4,7 @@ import { FilterBar } from './FilterBar';
 import { CardDeck } from './CardDeck';
 import { ResultPanel } from './ResultPanel';
 import { EmptyState } from './EmptyState';
-import { PlusCircle, Sparkles } from 'lucide-react';
+import { PlusCircle, Heart } from 'lucide-react';
 import { SquiggleDoodle, StarDoodle } from './DoodleDecorations';
 
 interface RandomizerPageProps {
@@ -21,18 +21,21 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
   onLoadSampleData,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedFavoriteOf, setSelectedFavoriteOf] = useState<string>('all');
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [selectedResult, setSelectedResult] = useState<FoodItem | null>(null);
 
-  // Filter items according to category and maxPrice
-  // "Item yang tidak memiliki harga tidak boleh masuk ketika filter batas harga sedang aktif."
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
-      // Category match
+      // Category filter
       if (selectedCategory !== 'all' && item.category !== selectedCategory) {
         return false;
       }
-      // Price match
+      // Couple favorite filter
+      if (selectedFavoriteOf !== 'all' && item.favoriteOf !== selectedFavoriteOf) {
+        return false;
+      }
+      // Max price filter
       if (maxPrice !== null) {
         if (item.price === undefined || item.price === null) {
           return false;
@@ -43,7 +46,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       }
       return true;
     });
-  }, [items, selectedCategory, maxPrice]);
+  }, [items, selectedCategory, selectedFavoriteOf, maxPrice]);
 
   const handleResetRound = () => {
     setSelectedResult(null);
@@ -53,7 +56,6 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       {/* Header section */}
       <div className="text-center max-w-2xl mx-auto mb-8 relative">
-        {/* Decorative Doodles */}
         <div className="hidden sm:block absolute -top-2 left-4 pointer-events-none opacity-50">
           <StarDoodle className="w-5 h-5 text-[#3975EA]" />
         </div>
@@ -61,20 +63,20 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           <StarDoodle className="w-6 h-6 text-[#FFC5AD]" />
         </div>
 
-        {/* Small Badge */}
-        <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#E8F0FF] text-[#3975EA] text-xs font-bold tracking-wide uppercase mb-3 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Buat yang suka bingung makan.</span>
+        {/* Couple Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFE8DD] text-[#E05A47] text-xs font-bold tracking-wide uppercase mb-3 shadow-xs border border-[#FFC5AD]/80">
+          <Heart className="w-3.5 h-3.5 fill-current" />
+          <span>Spesial Untuk Heru & Nadine</span>
         </div>
 
         {/* Main Title */}
-        <h1 className="font-fredoka text-3xl sm:text-5xl font-extrabold text-[#183153] tracking-tight leading-tight mb-3">
-          Lagi laper, tapi bingung?
+        <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#183153] tracking-tight leading-tight mb-3">
+          Hari ini kita makan apa, sayang?
         </h1>
 
         {/* Description */}
-        <p className="text-sm sm:text-base text-[#183153]/75 font-medium leading-relaxed mb-6">
-          Isi pilihan kulinermu, acak kartunya, terus biarkan satu pilihan jadi menu hari ini.
+        <p className="text-sm sm:text-base text-[#183153]/80 font-medium leading-relaxed mb-6">
+          Biar nggak ada yang pusing atau saling bilang <span className="font-handwriting text-xl text-[#E05A47] font-bold">"terserah kamu"</span> lagi. Tinggal acak kartunya, terus gas berangkat!
         </p>
 
         {/* Secondary action shortcut */}
@@ -84,7 +86,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#3975EA] hover:text-[#285ec4] bg-white hover:bg-[#E8F0FF] px-4 py-2.5 rounded-full border border-[#FFE8DD] shadow-xs transition-colors min-h-[44px]"
           >
             <PlusCircle className="w-4 h-4" />
-            <span>Tambah kuliner</span>
+            <span>Tambah tempat kencan baru</span>
           </button>
         </div>
 
@@ -94,7 +96,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         </div>
       </div>
 
-      {/* If collection has 0 items overall, show EmptyState directly */}
+      {/* If collection has 0 items overall, show EmptyState */}
       {items.length === 0 ? (
         <EmptyState
           onAddFood={onOpenAddModal}
@@ -102,17 +104,19 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         />
       ) : (
         <>
-          {/* Filter Bar */}
+          {/* Filter Bar with Couple Preferences */}
           <FilterBar
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
+            selectedFavoriteOf={selectedFavoriteOf}
+            onSelectFavoriteOf={setSelectedFavoriteOf}
             maxPrice={maxPrice}
             onMaxPriceChange={setMaxPrice}
             filteredCount={filteredItems.length}
             totalCount={items.length}
           />
 
-          {/* Card Deck with Fisher-Yates Shuffle & 3D Flip */}
+          {/* Card Deck */}
           <CardDeck
             filteredItems={filteredItems}
             onOpenAddModal={onOpenAddModal}
@@ -121,7 +125,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
             onResetRound={handleResetRound}
           />
 
-          {/* Result Panel appears when a card is selected */}
+          {/* Result Panel */}
           {selectedResult && (
             <ResultPanel
               selectedItem={selectedResult}
