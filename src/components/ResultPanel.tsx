@@ -39,11 +39,13 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({
     }
   }, [selectedItem.id]);
 
-  // Share text for WhatsApp
-  const shareText = encodeURIComponent(
-    `Sayang, hasil acak Love Food hari ini kita fix ke "${selectedItem.placeName}" makan "${selectedItem.menuName}"! Siap-siap yaa ❤️`
-  );
-  const waUrl = `https://api.whatsapp.com/send?text=${shareText}`;
+  // Share text for WhatsApp (including Google Maps link)
+  const mapsLink =
+    selectedItem.mapsUrl ||
+    `https://maps.google.com/?q=${encodeURIComponent(selectedItem.placeName)}`;
+
+  const shareMessage = `Sayang, hasil acak Love Food hari ini kita fix ke "${selectedItem.placeName}" makan "${selectedItem.menuName}"! Siap-siap yaa ❤️\n\n📍 Lokasi Google Maps:\n${mapsLink}`;
+  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
 
   return (
     <div
