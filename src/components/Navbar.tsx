@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange, totalIte
               Heru & Nadine
             </h1>
             <p className="font-handwriting text-sm sm:text-base font-bold text-[#D44835] tracking-wide block line-clamp-1 mt-1">
-              "Pemberi solusi anti terserah kita berdua" ✨
+              "Pemberi solusi anti terserah kita berdua"
             </p>
           </div>
         </button>
