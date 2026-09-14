@@ -62,7 +62,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
           isFlipped ? 'rotate-y-180' : ''
         } ${isShuffling ? 'animate-pulse scale-95' : 'hover:-translate-y-2 hover:shadow-card-hover'}`}
       >
-        {/* ================= BACK OF CARD (Closed State: Blue with doodle & Kudus touch) ================= */}
+        {/* ================= BACK OF CARD (Closed State: Blue with doodle & couple touch) ================= */}
         <div
           className="absolute inset-0 w-full h-full backface-hidden rounded-3xl card-back-pattern border-3 sm:border-4 border-white shadow-soft-lg flex flex-col items-center justify-between p-3.5 sm:p-6 text-white overflow-hidden"
         >
@@ -70,7 +70,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
           <div className="w-full flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFC5AD] fill-current" />
-              <span className="font-handwriting text-sm sm:text-base text-[#FFE8DD]">Kudus Date</span>
+              <span className="font-handwriting text-sm sm:text-base text-[#FFE8DD]">Love Date</span>
             </div>
             <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-white/90 uppercase bg-white/20 px-2 py-0.5 rounded-full">
               #{index + 1}
@@ -87,14 +87,14 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
               Pilih aku?
             </h3>
             <p className="font-handwriting text-base sm:text-lg text-[#FFE8DD] font-semibold mt-0.5">
-              Spot enak di Kudus 💕
+              Spot kuliner enak 💕
             </p>
           </div>
 
           {/* Bottom couple watermark */}
           <div className="w-full flex items-center justify-between text-[10px] sm:text-[11px] text-white/80 font-semibold border-t border-white/20 pt-1.5 sm:pt-2">
             <span>Heru</span>
-            <span className="text-[#FFC5AD]">❤️ Kudus</span>
+            <span className="text-[#FFC5AD]">❤️ Forever</span>
             <span>Nadine</span>
           </div>
         </div>

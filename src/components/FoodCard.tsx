@@ -23,7 +23,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
       {item.isSample && (
         <div className="absolute top-0 right-0 bg-[#FFE8DD] text-[#183153] text-[10px] font-bold px-3 py-1 rounded-bl-xl border-l border-b border-[#FFC5AD] flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-[#3975EA]" />
-          <span>Kudus Rekomen</span>
+          <span>Top Rekomen</span>
         </div>
       )}
 
@@ -76,7 +76,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
           </p>
         )}
 
-        {/* Short address in Kudus */}
+        {/* Short address */}
         {item.address && (
           <p className="text-xs text-[#183153]/60 line-clamp-1 mb-1.5 break-words">
             📍 {item.address}
@@ -107,7 +107,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
               <span>Google Maps</span>
             </a>
           ) : (
-            <span className="text-[11px] text-[#183153]/40">Kudus</span>
+            <span className="text-[11px] text-[#183153]/40">Favorit</span>
           )}
         </div>
 

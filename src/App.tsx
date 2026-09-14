@@ -38,18 +38,21 @@ export const App: React.FC = () => {
   useEffect(() => {
     const { items: loaded, isCorrupted } = loadFoodItems();
     
-    // Auto-update to Kudus recommended spots if empty or previous non-Kudus sample
-    const hasOldNonKudusSample = loaded.some(
-      (item) => item.isSample && (!item.address || !item.address.toLowerCase().includes('kudus'))
+    // Auto-update to latest sample if items contain legacy text or is empty
+    const hasLegacyData = loaded.some(
+      (item) =>
+        (item.placeName && /kudus/i.test(item.placeName)) ||
+        (item.address && /kudus/i.test(item.address)) ||
+        (item.notes && /kudus/i.test(item.notes)) ||
+        (item.id && /kudus/i.test(item.id))
     );
 
-    // Auto-update to full 26 Kudus spots if empty, non-Kudus, or previous 8-item sample
     const isOldSmallSampleSet = loaded.length < SAMPLE_FOOD_ITEMS.length && loaded.every((item) => item.isSample);
 
-    if (loaded.length === 0 || hasOldNonKudusSample || isOldSmallSampleSet) {
+    if (loaded.length === 0 || hasLegacyData || isOldSmallSampleSet) {
       setItems(SAMPLE_FOOD_ITEMS);
       saveFoodItems(SAMPLE_FOOD_ITEMS);
-      addToast('30 kuliner Kudus bintang 4.5+ termasuk Nasi Padang berhasil dimuat! ⭐');
+      addToast('30 pilihan kuliner terbaik bintang 4.5+ berhasil dimuat! ⭐');
     } else {
       setItems(loaded);
     }
@@ -74,7 +77,7 @@ export const App: React.FC = () => {
   // Load sample data
   const handleLoadSampleData = () => {
     updateItems(SAMPLE_FOOD_ITEMS);
-    addToast('30 menu rekomendasi kuliner Kudus bintang 4.5+ berhasil dimuat!');
+    addToast('30 menu rekomendasi kuliner pilihan berhasil dimuat!');
   };
 
   // Open modal for adding

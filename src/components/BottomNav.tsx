@@ -45,7 +45,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
           }`}
         >
           <BookHeart className="w-5 h-5 text-[#E05A47]" />
-          <span>Kuliner Kudus</span>
+          <span>Kuliner Kita</span>
           {totalItems > 0 && (
             <span
               className={`text-xs px-2 py-0.5 rounded-full font-bold transition-colors ${

@@ -41,13 +41,13 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({
 
   // Share text for WhatsApp
   const shareText = encodeURIComponent(
-    `Sayang, hasil acak Love Food di Kudus hari ini kita fix ke "${selectedItem.placeName}" makan "${selectedItem.menuName}"! Siap-siap yaa ❤️`
+    `Sayang, hasil acak Love Food hari ini kita fix ke "${selectedItem.placeName}" makan "${selectedItem.menuName}"! Siap-siap yaa ❤️`
   );
   const waUrl = `https://api.whatsapp.com/send?text=${shareText}`;
 
   return (
     <div
-      aria-label="Halaman Hasil Pilihan Menu Kencan Kudus"
+      aria-label="Halaman Hasil Pilihan Menu Kencan"
       className="w-full max-w-xl mx-auto px-3 sm:px-4 py-3 sm:py-5 animate-in fade-in zoom-in-95 duration-200"
     >
       {/* Back to Deck Button */}
@@ -141,10 +141,10 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({
             <div className="bg-white/90 rounded-2xl p-3 border border-[#FFC5AD]/60 shadow-xs">
               <span className="text-[10px] font-bold text-[#14253D]/60 uppercase tracking-wider block flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-[#3975EA]" />
-                Lokasi di Kudus
+                Lokasi Tempat
               </span>
               <p className="text-xs font-semibold text-[#14253D] line-clamp-2 mt-0.5">
-                {selectedItem.address || 'Kudus, Jawa Tengah'}
+                {selectedItem.address || 'Lokasi Tempat Favorit'}
               </p>
             </div>
           </div>
@@ -152,7 +152,7 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({
           {selectedItem.notes && (
             <div className="bg-white/95 rounded-2xl p-3.5 border border-[#FFC5AD]/70 shadow-xs">
               <span className="font-handwriting text-base font-bold text-[#D44835] block mb-0.5">
-                Catatan Kencan Kudus:
+                Catatan Kencan Kita:
               </span>
               <p className="text-xs sm:text-sm text-[#14253D] font-medium leading-relaxed">
                 "{selectedItem.notes}"

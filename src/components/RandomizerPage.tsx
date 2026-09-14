@@ -120,12 +120,12 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         {/* Badge */}
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#E8F0FF] to-[#D5E5FF] text-[#2558be] text-xs font-extrabold tracking-wide uppercase mb-2 shadow-xs border border-[#BDD7FF]">
           <MapPin className="w-3.5 h-3.5 text-[#D44835]" />
-          <span>Kuliner Kudus Rekomendasi ⭐ 4.5+</span>
+          <span>Kuliner Rekomendasi ⭐ 4.5+</span>
         </div>
 
         {/* Title */}
         <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-1.5">
-          Lagi di Kudus, mau makan apa hari ini?
+          Mau makan apa berdua hari ini?
         </h1>
 
         <p className="text-xs sm:text-sm text-[#14253D]/80 font-medium leading-relaxed mb-3">
@@ -137,7 +137,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         </div>
       </div>
 
-      {/* Filter Bar with Kudus MealTime, Couple, Category & Budget */}
+      {/* Filter Bar with MealTime, Couple, Category & Budget */}
       <FilterBar
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
@@ -177,7 +177,7 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] p-2 hover:underline"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>Tambah Tempat Makan Kudus Baru</span>
+          <span>Tambah Tempat Makan Baru</span>
         </button>
       </div>
     </div>

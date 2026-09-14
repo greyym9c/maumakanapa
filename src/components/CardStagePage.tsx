@@ -58,7 +58,7 @@ export const CardStagePage: React.FC<CardStagePageProps> = ({
           <AlertCircle className="w-8 h-8" />
         </div>
         <h2 className="font-display text-xl font-extrabold text-[#14253D] mb-1">
-          Tidak Ada Kuliner Kudus yang Cocok
+          Tidak Ada Pilihan Kuliner yang Cocok
         </h2>
         <p className="text-xs sm:text-sm text-[#14253D]/70 mb-5 max-w-sm font-medium">
           Filter yang kamu pilih terlalu spesifik. Coba ubah jam makan atau budget kencanmu.
@@ -88,7 +88,7 @@ export const CardStagePage: React.FC<CardStagePageProps> = ({
 
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE8DD]/80 border border-[#FFC5AD]/60 text-xs font-bold text-[#D44835] shadow-xs">
           <Heart className="w-3.5 h-3.5 fill-current animate-pulse" />
-          <span className="font-display">Heru & Nadine di Kudus</span>
+          <span className="font-display">Heru & Nadine 💕</span>
         </div>
 
         <button
@@ -109,7 +109,7 @@ export const CardStagePage: React.FC<CardStagePageProps> = ({
         </p>
         {selectedMealTimeLabel && (
           <p className="text-[11px] font-extrabold text-[#3975EA] mt-1.5">
-            Waktu: {selectedMealTimeLabel} • Tersedia {filteredItems.length} pilihan di Kudus
+            Waktu: {selectedMealTimeLabel} • Tersedia {filteredItems.length} pilihan kuliner
           </p>
         )}
       </div>

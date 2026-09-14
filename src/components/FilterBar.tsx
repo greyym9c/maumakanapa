@@ -45,7 +45,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <div>
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className="font-display font-extrabold text-sm sm:text-base text-[#14253D]">
-                Kuliner Kudus Rekomendasi
+                Kuliner Rekomendasi
               </span>
               <span className="inline-flex items-center gap-1 text-[11px] font-extrabold bg-[#FEF3C7] text-[#92400E] px-2.5 py-0.5 rounded-full border border-[#FDE68A] shadow-xs">
                 <Star className="w-3 h-3 fill-current text-[#F59E0B]" />
@@ -53,7 +53,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               </span>
             </div>
             <p className="text-xs font-semibold text-[#14253D]/70 mt-0.5">
-              Tersedia <span className="text-[#3975EA] font-extrabold text-sm">{filteredCount}</span> dari {totalCount} kuliner date di Kudus
+              Tersedia <span className="text-[#3975EA] font-extrabold text-sm">{filteredCount}</span> dari {totalCount} pilihan kuliner date
             </p>
           </div>
         </div>
@@ -152,7 +152,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         {/* 3. Category Pills */}
         <div>
           <label className="text-xs font-bold text-[#14253D]/80 mb-2 block uppercase tracking-wider">
-            Kategori Kuliner Kudus:
+            Kategori Kuliner:
           </label>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {Object.entries(CATEGORY_LABELS).map(([key, item]) => {

@@ -161,10 +161,10 @@ export const FoodModal: React.FC<FoodModalProps> = ({
             </div>
             <div>
               <h2 id="modal-title" className="font-display text-xl font-bold text-[#183153]">
-                {initialItem ? 'Edit Kuliner Kudus' : 'Tambah Kuliner Kudus'}
+                {initialItem ? 'Edit Kuliner' : 'Tambah Kuliner Baru'}
               </h2>
               <p className="text-xs text-[#183153]/70 font-medium">
-                Daftar kencan kuliner Heru & Nadine di Kudus 💕
+                Daftar kencan kuliner Heru & Nadine 💕
               </p>
             </div>
           </div>
@@ -234,14 +234,14 @@ export const FoodModal: React.FC<FoodModalProps> = ({
               htmlFor="placeName"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1"
             >
-              Nama Tempat / Warung di Kudus <span className="text-red-500">*</span>
+              Nama Tempat / Warung Makan <span className="text-red-500">*</span>
             </label>
             <input
               ref={firstInputRef}
               id="placeName"
               type="text"
               required
-              placeholder="Contoh: Soto Kudus Pak Denuh, Garang Asem Sari Rasa..."
+              placeholder="Contoh: Soto Pak Denuh, Garang Asem Sari Rasa..."
               value={placeName}
               onChange={(e) => {
                 setPlaceName(e.target.value);
@@ -392,13 +392,13 @@ export const FoodModal: React.FC<FoodModalProps> = ({
             </div>
           </div>
 
-          {/* Alamat di Kudus */}
+          {/* Alamat Lengkap */}
           <div>
             <label
               htmlFor="address"
               className="block text-xs font-bold uppercase tracking-wider text-[#183153] mb-1"
             >
-              Alamat di Kudus / Patokan
+              Alamat Lengkap / Patokan
             </label>
             <input
               id="address"
@@ -463,7 +463,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
               className="inline-flex items-center gap-2 bg-[#3975EA] hover:bg-[#285ec4] text-white font-bold px-6 py-2.5 rounded-2xl shadow-soft btn-press min-h-[44px]"
             >
               <Save className="w-4 h-4" />
-              <span>{initialItem ? 'Simpan Perubahan' : 'Simpan ke Kuliner Kudus'}</span>
+              <span>{initialItem ? 'Simpan Perubahan' : 'Simpan Kuliner'}</span>
             </button>
           </div>
         </form>

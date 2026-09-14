@@ -38,10 +38,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange, totalIte
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#3975EA] bg-[#E8F0FF] px-1.5 py-0.2 rounded-md sm:hidden">
-                Kudus
+                Couple
               </span>
               <span className="font-handwriting text-base font-bold text-[#D44835] tracking-wide block -mt-0.5">
-                "Pemberi solusi anti terserah di Kudus" ✨
+                "Pemberi solusi anti terserah kita berdua" ✨
               </span>
             </div>
           </div>
@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange, totalIte
             }`}
           >
             <BookHeart className="w-4 h-4 text-[#D44835]" />
-            <span>30 Kuliner Kudus</span>
+            <span>30 Kuliner Pilihan</span>
             {totalItems > 0 && (
               <span
                 className={`text-xs px-2 py-0.5 rounded-full font-bold transition-colors ${
