@@ -6,6 +6,7 @@ import { ResultPanel } from './ResultPanel';
 import { EmptyState } from './EmptyState';
 import { Dices, PlusCircle, MapPin, Sparkles, Heart } from 'lucide-react';
 import { SquiggleDoodle, StarDoodle } from './DoodleDecorations';
+import couplePhoto from '../assets/Foto.jpg';
 
 interface RandomizerPageProps {
   items: FoodItem[];
@@ -117,8 +118,33 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           <StarDoodle className="w-6 h-6 text-[#FFC5AD]" />
         </div>
 
+        {/* Precise Circular Couple Photo */}
+        <div className="flex justify-center mb-4">
+          <div className="relative group cursor-pointer">
+            {/* Ambient outer glow */}
+            <div className="absolute -inset-1.5 bg-gradient-to-tr from-[#3975EA] via-[#FF8B66] to-[#FFC5AD] rounded-full blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
+            
+            {/* Precise circular frame */}
+            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-white shadow-xl ring-2 ring-[#FFE8DD]">
+              <div className="w-full h-full rounded-full overflow-hidden bg-[#FFE8DD]">
+                <img
+                  src={couplePhoto}
+                  alt="Heru & Nadine"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  loading="eager"
+                />
+              </div>
+            </div>
+
+            {/* Little floating heart badge */}
+            <div className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-[#FF8B66] to-[#FFC5AD] border-2 border-white flex items-center justify-center text-xs sm:text-sm shadow-md animate-pulse">
+              ❤️
+            </div>
+          </div>
+        </div>
+
         {/* Title */}
-        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-2 pt-2">
+        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-2">
           Mau makan apa berdua hari ini?
         </h1>
 

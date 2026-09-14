@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Lock, Heart, Delete, Sparkles, AlertCircle } from 'lucide-react';
 import { BowlIcon } from './DoodleDecorations';
 
+import couplePhoto from '../assets/Foto.jpg';
+
 interface PinLockScreenProps {
   onUnlock: () => void;
 }
@@ -93,11 +95,17 @@ export const PinLockScreen: React.FC<PinLockScreenProps> = ({ onUnlock }) => {
 
       {/* Top Header Section */}
       <div className="flex flex-col items-center text-center mt-2 relative z-10 animate-in fade-in slide-in-from-top-4 duration-500">
-        {/* Animated Icon Avatar */}
-        <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#3975EA] to-[#2558be] text-white flex items-center justify-center shadow-[0_12px_28px_rgba(57,117,234,0.35)] relative mb-3">
-          <BowlIcon className="w-8 h-8 text-[#FFE8DD]" />
-          <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-gradient-to-tr from-[#FF8B66] to-[#FFC5AD] border-2 border-white rounded-full flex items-center justify-center text-xs shadow-sm animate-pulse">
-            ❤️
+        {/* Animated Circular Couple Photo Avatar */}
+        <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full p-1 bg-white shadow-xl ring-2 ring-[#FFE8DD] mb-3">
+          <div className="w-full h-full rounded-full overflow-hidden bg-[#FFE8DD]">
+            <img
+              src={couplePhoto}
+              alt="Heru & Nadine"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          <span className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-tr from-[#3975EA] to-[#2558be] border-2 border-white rounded-full flex items-center justify-center text-xs text-white shadow-sm">
+            <Lock className="w-3.5 h-3.5" />
           </span>
         </div>
 
