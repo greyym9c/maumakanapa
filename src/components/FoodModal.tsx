@@ -153,14 +153,17 @@ export const FoodModal: React.FC<FoodModalProps> = ({
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
       <div className="relative w-full md:max-w-xl bg-white rounded-t-3xl md:rounded-3xl shadow-2xl border border-[#FFE8DD] flex flex-col max-h-[92vh] z-10 animate-in slide-in-from-bottom md:zoom-in-95 duration-200">
+        {/* Mobile drag handle */}
+        <div className="w-12 h-1.5 bg-gray-300/80 rounded-full mx-auto mt-2.5 -mb-1 md:hidden" />
+
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[#FFE8DD] bg-[#FFF9F4] rounded-t-3xl">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-[#3975EA] text-white flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#3975EA] to-[#2558be] text-white flex items-center justify-center shadow-xs shrink-0">
               <BowlIcon className="w-5 h-5 text-[#FFE8DD]" />
             </div>
             <div>
-              <h2 id="modal-title" className="font-display text-xl font-bold text-[#183153]">
+              <h2 id="modal-title" className="font-display text-lg sm:text-xl font-black text-[#183153]">
                 {initialItem ? 'Edit Kuliner' : 'Tambah Kuliner Baru'}
               </h2>
               <p className="text-xs text-[#183153]/70 font-medium">
@@ -171,7 +174,7 @@ export const FoodModal: React.FC<FoodModalProps> = ({
 
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full hover:bg-black/5 flex items-center justify-center text-[#183153] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA]"
+            className="w-9 h-9 rounded-full hover:bg-black/5 flex items-center justify-center text-[#183153] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA]"
             aria-label="Tutup form"
           >
             <X className="w-5 h-5" />

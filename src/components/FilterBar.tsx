@@ -90,7 +90,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 sm:gap-2">
             {(['semua', 'pagi', 'siang', 'sore', 'malam'] as MealTime[]).map((timeKey) => {
               const info = MEAL_TIME_LABELS[timeKey];
               const isActive = selectedMealTime === timeKey;
@@ -98,17 +98,17 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 <button
                   key={timeKey}
                   onClick={() => onSelectMealTime(timeKey)}
-                  className={`flex flex-col items-center justify-center p-2.5 rounded-2xl text-xs font-bold transition-all min-h-[50px] border ${
+                  className={`flex flex-col items-center justify-center py-2 px-1.5 sm:p-2.5 rounded-2xl text-xs font-bold transition-all min-h-[52px] border ${
                     isActive
                       ? 'bg-gradient-to-r from-[#3975EA] to-[#265ecc] text-white border-[#3975EA] shadow-[0_4px_14px_rgba(57,117,234,0.3)] scale-102'
                       : 'bg-white/80 text-[#14253D] border-[#FFE8DD] hover:bg-[#E8F0FF]/60 hover:border-[#D0E0FF]'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <span className="text-sm">{info.emoji}</span>
-                    <span className="font-display">{info.label.split(' ')[0]}</span>
+                    <span className="font-display text-[11px] sm:text-xs">{info.label.split(' ')[0]}</span>
                   </div>
-                  <span className={`text-[10px] font-medium mt-0.5 ${isActive ? 'text-white/80' : 'text-[#14253D]/60'}`}>
+                  <span className={`text-[9px] sm:text-[10px] font-medium mt-0.5 ${isActive ? 'text-white/80' : 'text-[#14253D]/60'}`}>
                     {timeKey === 'semua' ? 'Bebas jam' : info.timeRange.split(' ')[0]}
                   </span>
                 </button>

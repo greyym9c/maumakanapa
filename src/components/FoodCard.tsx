@@ -17,7 +17,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ item, onEdit, onDelete }) =>
   return (
     <article
       aria-label={`${item.menuName} di ${item.placeName}`}
-      className="bg-white rounded-3xl p-5 border border-[#FFE8DD] shadow-soft hover:shadow-soft-lg transition-all flex flex-col justify-between group relative overflow-hidden"
+      className="bg-white rounded-3xl p-5 sm:p-6 border border-[#FFE8DD] shadow-[0_4px_20px_rgba(20,37,61,0.05)] hover:shadow-[0_12px_32px_rgba(20,37,61,0.1)] transition-all flex flex-col justify-between group relative overflow-hidden"
     >
       {/* Sample Badge if applicable */}
       {item.isSample && (

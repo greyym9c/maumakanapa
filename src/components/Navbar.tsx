@@ -10,37 +10,37 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange, totalItems }) => {
   return (
-    <header className="w-full bg-[#FFF9F4]/80 backdrop-blur-xl sticky top-0 z-40 border-b border-[#FFE8DD]/80 transition-all">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+    <header className="w-full bg-[#FFF9F4]/90 backdrop-blur-xl sticky top-0 z-40 border-b border-[#FFE8DD]/80 shadow-[0_4px_20px_rgba(20,37,61,0.03)] transition-all">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-18 sm:h-20 flex items-center justify-between">
         {/* Brand / Logo: Heru & Nadine */}
         <button
           onClick={() => onTabChange('random')}
-          className="flex items-center gap-3 group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] rounded-2xl p-1"
+          className="flex items-center gap-3 group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3975EA] rounded-2xl p-1 -ml-1 transition-transform active:scale-98"
           aria-label="Kembali ke beranda Love Food"
         >
           {/* Glowing icon badge */}
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#3975EA] to-[#2558be] text-white flex items-center justify-center shadow-[0_8px_20px_rgba(57,117,234,0.28)] group-hover:scale-105 transition-transform relative">
-            <BowlIcon className="w-6 h-6 text-[#FFE8DD]" />
-            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-gradient-to-tr from-[#FF8B66] to-[#FFC5AD] border-2 border-white rounded-full flex items-center justify-center text-[10px] shadow-sm animate-pulse">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#3975EA] to-[#2558be] text-white flex items-center justify-center shadow-[0_8px_20px_rgba(57,117,234,0.28)] group-hover:scale-105 transition-transform relative shrink-0">
+            <BowlIcon className="w-5 h-5 sm:w-6 sm:h-6 text-[#FFE8DD]" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-tr from-[#FF8B66] to-[#FFC5AD] border-2 border-white rounded-full flex items-center justify-center text-[9px] sm:text-[10px] shadow-sm animate-pulse">
               ❤️
             </span>
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display text-2xl font-black text-[#14253D] tracking-tight group-hover:text-[#3975EA] transition-colors">
+              <span className="font-display text-xl sm:text-2xl font-black text-[#14253D] tracking-tight group-hover:text-[#3975EA] transition-colors leading-none">
                 Heru & Nadine
               </span>
-              <span className="text-[11px] font-bold bg-gradient-to-r from-[#FFE8DD] to-[#FFD8C9] text-[#D44835] px-2.5 py-0.5 rounded-full border border-[#FFC5AD]/60 shadow-xs hidden sm:inline-flex items-center gap-1">
+              <span className="text-[10px] sm:text-[11px] font-extrabold bg-gradient-to-r from-[#FFE8DD] to-[#FFD8C9] text-[#D44835] px-2.5 py-0.5 rounded-full border border-[#FFC5AD]/60 shadow-xs hidden sm:inline-flex items-center gap-1">
                 <Sparkles className="w-3 h-3" />
                 <span>Love Food</span>
               </span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#3975EA] bg-[#E8F0FF] px-1.5 py-0.2 rounded-md sm:hidden">
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#3975EA] bg-[#E8F0FF] px-1.5 py-0.5 rounded-md sm:hidden shrink-0">
                 Couple
               </span>
-              <span className="font-handwriting text-base font-bold text-[#D44835] tracking-wide block -mt-0.5">
+              <span className="font-handwriting text-sm sm:text-base font-bold text-[#D44835] tracking-wide block line-clamp-1">
                 "Pemberi solusi anti terserah kita berdua" ✨
               </span>
             </div>

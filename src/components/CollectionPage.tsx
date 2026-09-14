@@ -84,7 +84,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
       ) : (
         <>
           {/* Search & Filter Bar */}
-          <div className="bg-white rounded-3xl p-4 sm:p-5 border border-[#FFE8DD] shadow-soft mb-6 space-y-3">
+          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-[#FFE8DD] shadow-soft mb-6 space-y-4">
             {/* Search Input */}
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#183153]/40" />
@@ -93,12 +93,12 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 placeholder="Cari soto, sate, lentog, garang asem, kopi, kafe..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-2.5 bg-[#FFF9F4] border border-[#FFE8DD] rounded-2xl text-sm font-medium text-[#183153] placeholder:text-[#183153]/40 focus:outline-none focus:ring-2 focus:ring-[#3975EA] min-h-[46px]"
+                className="w-full pl-11 pr-10 py-3 bg-[#FFF9F4] border border-[#FFE8DD] rounded-2xl text-sm font-medium text-[#183153] placeholder:text-[#183153]/40 focus:outline-none focus:ring-2 focus:ring-[#3975EA] min-h-[46px]"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-black/5 text-[#183153]/50"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-black/5 text-[#183153]/50"
                   aria-label="Hapus pencarian"
                 >
                   <X className="w-4 h-4" />
@@ -107,36 +107,41 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
             </div>
 
             {/* Meal time filter */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-              <span className="text-[11px] font-bold text-[#183153]/70 shrink-0 flex items-center gap-1 mr-1">
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-bold text-[#183153]/70 uppercase tracking-wider flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-[#3975EA]" />
-                Waktu:
+                Waktu Kencan:
               </span>
-              {(['semua', 'pagi', 'siang', 'sore', 'malam'] as MealTime[]).map((t) => {
-                const info = MEAL_TIME_LABELS[t];
-                const isActive = selectedMealTime === t;
-                return (
-                  <button
-                    key={t}
-                    onClick={() => setSelectedMealTime(t)}
-                    className={`shrink-0 inline-flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold transition-all min-h-[34px] border ${
-                      isActive
-                        ? 'bg-[#3975EA] text-white border-[#3975EA]'
-                        : 'bg-[#FFF9F4] text-[#183153] border-[#FFE8DD] hover:bg-[#E8F0FF]'
-                    }`}
-                  >
-                    <span>{info.emoji}</span>
-                    <span>{info.label.split(' ')[0]}</span>
-                  </button>
-                );
-              })}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-1 px-1">
+                {(['semua', 'pagi', 'siang', 'sore', 'malam'] as MealTime[]).map((t) => {
+                  const info = MEAL_TIME_LABELS[t];
+                  const isActive = selectedMealTime === t;
+                  return (
+                    <button
+                      key={t}
+                      onClick={() => setSelectedMealTime(t)}
+                      className={`shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all min-h-[36px] border ${
+                        isActive
+                          ? 'bg-[#3975EA] text-white border-[#3975EA] shadow-xs'
+                          : 'bg-[#FFF9F4] text-[#183153] border-[#FFE8DD] hover:bg-[#E8F0FF]'
+                      }`}
+                    >
+                      <span>{info.emoji}</span>
+                      <span>{info.label.split(' ')[0]}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Couple Filter & Category Chips */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#FFE8DD]/60">
+            {/* Couple Filter */}
+            <div className="space-y-1.5 pt-2 border-t border-[#FFE8DD]/60">
+              <span className="text-[11px] font-bold text-[#183153]/70 uppercase tracking-wider block">
+                Selera Pasangan:
+              </span>
               <div className="flex flex-wrap items-center gap-1.5">
                 {[
-                  { id: 'all', label: 'Semua', emoji: '🍽️' },
+                  { id: 'all', label: 'Semua Menu', emoji: '🍽️' },
                   { id: 'heru', label: 'Favorit Heru', emoji: '👦' },
                   { id: 'nadine', label: 'Favorit Nadine', emoji: '👧' },
                   { id: 'berdua', label: 'Favorit Berdua', emoji: '💑' },
@@ -146,9 +151,9 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                     <button
                       key={item.id}
                       onClick={() => setSelectedFavoriteOf(item.id)}
-                      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold transition-all min-h-[34px] border ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all min-h-[36px] border ${
                         isActive
-                          ? 'bg-[#183153] text-white border-[#183153]'
+                          ? 'bg-[#183153] text-white border-[#183153] shadow-xs'
                           : 'bg-[#FFF9F4] text-[#183153] border-[#FFE8DD] hover:bg-[#FFE8DD]'
                       }`}
                     >
@@ -158,18 +163,24 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                   );
                 })}
               </div>
+            </div>
 
-              <div className="flex flex-wrap items-center gap-1">
+            {/* Category Chips */}
+            <div className="space-y-1.5 pt-2 border-t border-[#FFE8DD]/60">
+              <span className="text-[11px] font-bold text-[#183153]/70 uppercase tracking-wider block">
+                Kategori Menu:
+              </span>
+              <div className="flex flex-wrap items-center gap-1.5">
                 {Object.entries(CATEGORY_LABELS).map(([key, item]) => {
                   const isActive = selectedCategory === key;
                   return (
                     <button
                       key={key}
                       onClick={() => setSelectedCategory(key)}
-                      className={`inline-flex items-center gap-1 px-2 py-1 rounded-xl text-xs font-bold transition-all min-h-[34px] ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all min-h-[36px] border ${
                         isActive
-                          ? 'bg-[#3975EA] text-white'
-                          : 'bg-[#FFF9F4] text-[#183153] hover:bg-[#E8F0FF] border border-[#FFE8DD]'
+                          ? 'bg-[#3975EA] text-white border-[#3975EA] shadow-xs'
+                          : 'bg-[#FFF9F4] text-[#183153] hover:bg-[#E8F0FF] border-[#FFE8DD]'
                       }`}
                     >
                       <span>{item.emoji}</span>

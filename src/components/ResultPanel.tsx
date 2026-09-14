@@ -62,14 +62,14 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({
       </div>
 
       {/* Hero Result Card */}
-      <div className="bg-gradient-to-b from-[#FFF0E8] to-[#FFE8DD] border-3 border-[#FFC5AD] rounded-3xl p-5 sm:p-7 shadow-[0_20px_45px_-10px_rgba(255,139,102,0.25)] relative overflow-hidden">
+      <div className="bg-gradient-to-b from-[#FFF0E8] to-[#FFE8DD] border-2 border-[#FFC5AD] rounded-3xl p-5 sm:p-7 shadow-[0_20px_45px_-10px_rgba(255,139,102,0.22)] relative overflow-hidden">
         <div className="absolute -top-3 -right-3 w-20 h-20 opacity-30 pointer-events-none">
           <SparkleDoodle className="w-full h-full text-[#3975EA]" />
         </div>
 
         {/* Top Header Badge */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/95 border border-[#FFC5AD] text-[#14253D] text-xs font-bold shadow-xs">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 border border-[#FFC5AD] text-[#14253D] text-xs font-bold shadow-xs">
             <Heart className="w-3.5 h-3.5 text-[#E05A47] fill-current animate-pulse" />
             <span className="font-handwriting text-base text-[#D44835]">Fix Makan Ini Hari Ini!</span>
           </div>

@@ -46,7 +46,7 @@ export const FlippableCard: React.FC<FlippableCardProps> = ({
 
   return (
     <div
-      className="perspective-1000 w-full max-w-[280px] h-[305px] sm:h-[370px] select-none cursor-pointer transition-transform duration-300"
+      className="perspective-1000 w-full max-w-[260px] sm:max-w-[280px] h-[255px] sm:h-[350px] select-none cursor-pointer transition-transform duration-300"
       style={{
         transform: !isFlipped && !isShuffling && rotationDeg ? `rotate(${rotationDeg}deg)` : 'none',
       }}

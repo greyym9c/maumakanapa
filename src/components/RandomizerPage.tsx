@@ -107,9 +107,9 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
 
   // 4. CLEAN SETUP & FILTER VIEW
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-4 relative">
+      <div className="text-center max-w-2xl mx-auto mb-6 relative">
         <div className="hidden sm:block absolute -top-2 left-4 pointer-events-none opacity-50">
           <StarDoodle className="w-5 h-5 text-[#3975EA]" />
         </div>
@@ -118,17 +118,17 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         </div>
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#E8F0FF] to-[#D5E5FF] text-[#2558be] text-xs font-extrabold tracking-wide uppercase mb-2 shadow-xs border border-[#BDD7FF]">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#E8F0FF] to-[#D5E5FF] text-[#2558be] text-xs font-extrabold tracking-wide uppercase mb-3 shadow-xs border border-[#BDD7FF]">
           <MapPin className="w-3.5 h-3.5 text-[#D44835]" />
           <span>Kuliner Rekomendasi ⭐ 4.5+</span>
         </div>
 
         {/* Title */}
-        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-1.5">
+        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-2">
           Mau makan apa berdua hari ini?
         </h1>
 
-        <p className="text-xs sm:text-sm text-[#14253D]/80 font-medium leading-relaxed mb-3">
+        <p className="text-xs sm:text-sm text-[#14253D]/80 font-medium leading-relaxed mb-3 max-w-lg mx-auto">
           Tentukan jam makan & selera kencan, lalu buka halaman acak kartu khusus! 💕
         </p>
 
@@ -151,15 +151,15 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
         totalCount={items.length}
       />
 
-      {/* GLOWING HERO CTA BUTTON */}
-      <div className="sticky bottom-20 md:bottom-6 z-30 pt-1 pb-1">
+      {/* GLOWING HERO CTA BUTTON with smooth background fade */}
+      <div className="sticky bottom-20 md:bottom-6 z-30 pt-3 pb-2 -mx-2 px-2 bg-gradient-to-t from-[#FFF9F4] via-[#FFF9F4]/90 to-transparent">
         <button
           onClick={() => setViewMode('card-stage')}
           disabled={filteredItems.length === 0}
           className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-3xl font-display font-black text-base sm:text-lg transition-all min-h-[58px] btn-press ${
             filteredItems.length === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none'
-              : 'bg-gradient-to-r from-[#3975EA] via-[#2a68e8] to-[#1d52ca] hover:brightness-105 text-white shadow-[0_12px_32px_rgba(57,117,234,0.4)] ring-4 ring-[#E8F0FF]'
+              : 'bg-gradient-to-r from-[#3975EA] via-[#2a68e8] to-[#1d52ca] hover:brightness-105 text-white shadow-[0_12px_32px_rgba(57,117,234,0.38)] ring-4 ring-[#E8F0FF]'
           }`}
         >
           <Dices className="w-6 h-6 animate-bounce" />
@@ -171,10 +171,10 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
       </div>
 
       {/* Quick Link to Add Custom Spot */}
-      <div className="text-center pt-3">
+      <div className="text-center pt-2 pb-4">
         <button
           onClick={onOpenAddModal}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] p-2 hover:underline"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3975EA] hover:text-[#285ec4] py-2 px-3 rounded-xl hover:bg-[#E8F0FF]/50 transition-colors"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Tambah Tempat Makan Baru</span>

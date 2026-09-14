@@ -11,9 +11,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange, to
   return (
     <nav
       aria-label="Navigasi Bawah Love Food"
-      className="md:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/95 backdrop-blur-2xl border border-[#FFE8DD] rounded-3xl shadow-[0_12px_36px_rgba(20,37,61,0.12)] p-2 safe-area-bottom"
+      className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-sm z-40 bg-white/95 backdrop-blur-2xl border border-[#FFE8DD] rounded-3xl shadow-[0_12px_36px_rgba(20,37,61,0.12)] p-1.5 safe-area-bottom"
     >
-      <div className="flex items-center justify-around gap-2">
+      <div className="flex items-center justify-around gap-1.5">
         <button
           onClick={() => {
             if (typeof window !== 'undefined' && 'vibrate' in navigator) {
