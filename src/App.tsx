@@ -44,25 +44,36 @@ export const App: React.FC = () => {
 
   // Initial load from localStorage
   useEffect(() => {
+    const isFirstTime = localStorage.getItem('love_food_initialized') === null;
     const { items: loaded, isCorrupted } = loadFoodItems();
-    
-    // Auto-update to latest sample if items contain legacy text or is empty
-    const hasLegacyData = loaded.some(
-      (item) =>
-        (item.placeName && /kudus/i.test(item.placeName)) ||
-        (item.address && /kudus/i.test(item.address)) ||
-        (item.notes && /kudus/i.test(item.notes)) ||
-        (item.id && /kudus/i.test(item.id))
-    );
 
-    const isOldSmallSampleSet = loaded.length < SAMPLE_FOOD_ITEMS.length && loaded.every((item) => item.isSample);
-
-    if (loaded.length === 0 || hasLegacyData || isOldSmallSampleSet) {
+    if (isFirstTime) {
+      // First time user opens the app: populate initial sample data
       setItems(SAMPLE_FOOD_ITEMS);
       saveFoodItems(SAMPLE_FOOD_ITEMS);
-      addToast('30 pilihan kuliner terbaik bintang 4.5+ berhasil dimuat! ⭐');
+      localStorage.setItem('love_food_initialized', 'true');
     } else {
-      setItems(loaded);
+      // User has used the app before: ALWAYS respect their deletions and additions!
+      // Only clean legacy text if any item contains old patterns, without restoring deleted items:
+      const hasLegacyData = loaded.some(
+        (item) =>
+          (item.placeName && /kudus/i.test(item.placeName)) ||
+          (item.address && /kudus/i.test(item.address)) ||
+          (item.notes && /kudus/i.test(item.notes))
+      );
+
+      if (hasLegacyData) {
+        const cleaned = loaded.map((item) => ({
+          ...item,
+          placeName: item.placeName?.replace(/kudus/gi, '').trim(),
+          address: item.address?.replace(/kudus/gi, '').trim(),
+          notes: item.notes?.replace(/kudus/gi, '').trim(),
+        }));
+        setItems(cleaned);
+        saveFoodItems(cleaned);
+      } else {
+        setItems(loaded);
+      }
     }
 
     if (isCorrupted) {
@@ -76,16 +87,17 @@ export const App: React.FC = () => {
   // Persist items whenever items change
   const updateItems = (newItems: FoodItem[]) => {
     setItems(newItems);
+    localStorage.setItem('love_food_initialized', 'true');
     const success = saveFoodItems(newItems);
     if (!success) {
       addToast('Gagal menyimpan data ke browser (kuota penyimpanan penuh).', 'error');
     }
   };
 
-  // Load sample data
+  // Load sample data manually
   const handleLoadSampleData = () => {
     updateItems(SAMPLE_FOOD_ITEMS);
-    addToast('30 menu rekomendasi kuliner pilihan berhasil dimuat!');
+    addToast('Menu rekomendasi kuliner pilihan berhasil dimuat!');
   };
 
   // Open modal for adding
