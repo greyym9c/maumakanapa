@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dices, BookHeart, Sparkles, Lock } from 'lucide-react';
+import { Dices, BookHeart, Lock } from 'lucide-react';
 import { BowlIcon } from './DoodleDecorations';
 
 interface NavbarProps {
@@ -28,23 +28,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange, totalIte
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-display text-xl sm:text-2xl font-black text-[#14253D] tracking-tight group-hover:text-[#3975EA] transition-colors leading-none">
-                Heru & Nadine
-              </span>
-              <span className="text-[10px] sm:text-[11px] font-extrabold bg-gradient-to-r from-[#FFE8DD] to-[#FFD8C9] text-[#D44835] px-2.5 py-0.5 rounded-full border border-[#FFC5AD]/60 shadow-xs hidden sm:inline-flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                <span>Love Food</span>
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 mt-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#3975EA] bg-[#E8F0FF] px-1.5 py-0.5 rounded-md sm:hidden shrink-0">
-                Couple
-              </span>
-              <span className="font-handwriting text-sm sm:text-base font-bold text-[#D44835] tracking-wide block line-clamp-1">
-                "Pemberi solusi anti terserah kita berdua" ✨
-              </span>
-            </div>
+            <h1 className="font-display text-xl sm:text-2xl font-black text-[#14253D] tracking-tight group-hover:text-[#3975EA] transition-colors leading-none">
+              Heru & Nadine
+            </h1>
+            <p className="font-handwriting text-sm sm:text-base font-bold text-[#D44835] tracking-wide block line-clamp-1 mt-1">
+              "Pemberi solusi anti terserah kita berdua" ✨
+            </p>
           </div>
         </button>
 
