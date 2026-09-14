@@ -11,8 +11,16 @@ import { ConfirmModal } from './components/ConfirmModal';
 import { ToastContainer } from './components/Toast';
 
 import { InstallPwaBanner } from './components/InstallPwaBanner';
+import { PinLockScreen } from './components/PinLockScreen';
 
 export const App: React.FC = () => {
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('love_food_unlocked') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [activeTab, setActiveTab] = useState<'random' | 'collection'>('random');
   const [items, setItems] = useState<FoodItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,6 +144,28 @@ export const App: React.FC = () => {
     setDeletingItem(null);
   };
 
+  // Lock / Unlock handlers
+  const handleUnlock = () => {
+    setIsUnlocked(true);
+    try {
+      sessionStorage.setItem('love_food_unlocked', 'true');
+    } catch {}
+    addToast('Selamat datang Heru & Nadine! 💕 Akses kuliner terbuka.');
+  };
+
+  const handleLock = () => {
+    setIsUnlocked(false);
+    try {
+      sessionStorage.removeItem('love_food_unlocked');
+    } catch {}
+    addToast('Aplikasi terkunci kembali. 🔐');
+  };
+
+  // If not unlocked, display PIN Lock screen
+  if (!isUnlocked) {
+    return <PinLockScreen onUnlock={handleUnlock} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FFF9F4] text-[#183153] pb-24 md:pb-12">
       {/* Top Navigation */}
@@ -143,6 +173,7 @@ export const App: React.FC = () => {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         totalItems={items.length}
+        onLock={handleLock}
       />
 
       {/* PWA Install Banner */}
