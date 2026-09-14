@@ -45,7 +45,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <div>
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className="font-display font-extrabold text-sm sm:text-base text-[#14253D]">
-                Kuliner Rekomendasi
+                Pilihan Kuliner
               </span>
               <span className="inline-flex items-center gap-1 text-[11px] font-extrabold bg-[#FEF3C7] text-[#92400E] px-2.5 py-0.5 rounded-full border border-[#FDE68A] shadow-xs">
                 <Star className="w-3 h-3 fill-current text-[#F59E0B]" />

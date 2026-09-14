@@ -50,7 +50,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F0FF] text-[#3975EA] text-xs font-bold uppercase tracking-wider mb-2 border border-[#D0E0FF]">
             <MapPin className="w-3.5 h-3.5 text-[#E05A47]" />
-            <span>Koleksi Kuliner Rekomendasi ⭐ 4.5+</span>
+            <span>Koleksi Pilihan ⭐ 4.5+</span>
           </div>
           <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#183153] tracking-tight">
             Kuliner Kita Heru & Nadine 💕

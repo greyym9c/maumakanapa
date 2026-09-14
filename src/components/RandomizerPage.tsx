@@ -117,14 +117,8 @@ export const RandomizerPage: React.FC<RandomizerPageProps> = ({
           <StarDoodle className="w-6 h-6 text-[#FFC5AD]" />
         </div>
 
-        {/* Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#E8F0FF] to-[#D5E5FF] text-[#2558be] text-xs font-extrabold tracking-wide uppercase mb-3 shadow-xs border border-[#BDD7FF]">
-          <MapPin className="w-3.5 h-3.5 text-[#D44835]" />
-          <span>Kuliner Rekomendasi ⭐ 4.5+</span>
-        </div>
-
         {/* Title */}
-        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-2">
+        <h1 className="font-display text-2xl sm:text-4xl font-black text-[#14253D] tracking-tight leading-tight mb-2 pt-2">
           Mau makan apa berdua hari ini?
         </h1>
 
